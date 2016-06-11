@@ -1,7 +1,6 @@
 body{
 	background: url(/resource/images/bg.jpg) 100% 100% no-repeat;
 	background-size: cover; /* Масштабируем фон */
-	/*opacity: 0.6;*/
 }
 .header{
 	background-color: rgba(4, 72, 97, 0.6);
@@ -10,7 +9,6 @@ body{
 	font-style: italic;
 }
 .adminpanel {
-	/*display: block;*/
 	float: right;
 }
 .block{
@@ -24,7 +22,6 @@ body{
 
 }
 .comment{
-	/*margin-top: 30px;*/
 	margin-bottom: 20px;
 	border: 2px solid #000;
 	padding: 10px 3%;
@@ -41,5 +38,9 @@ body{
 	margin-top: -10px;
 }
 footer{
-	text-align: center;
+	text-align: right;
+	margin-top: 10px;
+	font-size: 0.9em;
+	padding: 5px;
+	color: white;
 }

@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Простой блог</title>
-	<link rel="stylesheet" href="style.css">
-	<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
-</head>
-<body>
 <?php 
+	head($record['title']);
 	echo '
-	<div class="container">
-		<h1>Одно объявление</h1>
 		<div class="block">
 			<h3>'.$record['title'].'</h3>
 			<div>Дата публикации: '.$record['date'].'</div>
@@ -31,8 +20,7 @@
 			</div>';
 		}
 		
-?>
-			
+?>			
 	<form id="newcomment" name="newcomment"  method="post" autocomplete='on'>
 	   <label for="author"> Добавить новый комментарий:  </label>
 		<input type="text" name="author" id="author" size="20" maxlength="20"/>
@@ -43,12 +31,6 @@
 		value ="<?php echo date("Y-m-d");?>"/>
 		<input type="submit" name="enter" id="submit" value="Отправить" />
 	</form>
-	<a href="./">Вернуться на главную</a>
+	<a href="/">Вернуться на главную</a>
 	<br>
-		<footer>
-			<p>Заметки</p>
-		</footer>
-	</div>
-
-</body>
-</html>
+<?php footer();?>
