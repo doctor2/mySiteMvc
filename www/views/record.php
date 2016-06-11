@@ -8,26 +8,30 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
 </head>
 <body>
+<?php 
+	echo '
 	<div class="container">
 		<h1>Одно объявление</h1>
 		<div class="block">
-			<h3><?=$record['title']?></h3>
-			<div>Дата публикации: <?=$record['date']?></div>
+			<h3>'.$record['title'].'</h3>
+			<div>Дата публикации: '.$record['date'].'</div>
 			<br>
-			<div>
-				<?=$record['content']?>
-			</div>
+			<div>'.$record['content'].'</div>
 		</div>
-		<hr>
-		<?php foreach ($comments as &$comment): ?>
-		<div class="comment">
-			<?=$comment['author'].'   '.$comment['created'];?>
-			<div>
-				<?=$comment['comment']?>
-			</div>
-		</div>
-		<?php endforeach; ?>
-
+		<hr>';
+		foreach ($comments as &$comment){
+			echo '
+			<div class="comment">
+				<div class="headcomment">
+					<div class="author">'.$comment['author'].'</div>   
+					<div class="date">'.$comment['created'].'</div>
+				</div>
+				<hr>
+				<div class="content">'.$comment['comment'].'</div>
+			</div>';
+		}
+		
+?>
 			
 	<form id="newcomment" name="newcomment"  method="post" autocomplete='on'>
 	   <label for="author"> Добавить новый комментарий:  </label>
@@ -45,5 +49,6 @@
 			<p>Заметки</p>
 		</footer>
 	</div>
+
 </body>
 </html>
