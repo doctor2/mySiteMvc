@@ -7,23 +7,15 @@ $link = connectDb();
 if ($_SERVER['REQUEST_URI'] == '/') {
 	$page = 'index'; $module = 'index';
 } else {
-	$URL_Path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-	// print_r($URL_Path);	
-	// echo '1<br>';
-	$URL_Parts = explode('/', trim($URL_Path, ' /'));
-	// print_r($URL_Parts);
-	// echo '2<br>';
-	$page = array_shift($URL_Parts);
-	// print_r($page);
-	// echo '<br>';
-	$module = array_shift($URL_Parts);
-	// print_r($module);
-	// print_r($URL_Parts);
-	$parametrs = array();
-	if (!empty($module)  and count($URL_Parts) == 1)
-		$parametrs[$module] = $URL_Parts[0];
-	if (!empty($module)  and count($URL_Parts) == 2) {
-		$parametrs[$URL_Parts[0]] = $URL_Parts[1];
+		$URL_Path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+		$URL_Parts = explode('/', trim($URL_Path, ' /'));
+		$page = array_shift($URL_Parts);
+		$module = array_shift($URL_Parts);
+		$parametrs = array();
+		if (!empty($module)  and count($URL_Parts) == 1)
+			$parametrs[$module] = $URL_Parts[0];
+		if (!empty($module)  and count($URL_Parts) == 2) {
+			$parametrs[$URL_Parts[0]] = $URL_Parts[1];
 	}
 }
 
@@ -40,19 +32,6 @@ function prepareLineToQuery (&$link, $line) {
 	 return mysqli_real_escape_string($link, trim($line));
 	// return nl2br(htmlspecialchars(trim($line), ENT_QUOTES), false); для вывода
 }
-
-function login($level) {
-	if ($level<0)
-	{
-		head('Ошибка');
-		echo "<h1> Страница не доступна </h1>";
-		footer();
-		exit();
-	}
-	// if ($level <= 0 and $_SESSION['USER_LOGIN_IN'] != $level) MessageSend(1, 'Данная страница доступна только для гостей.', '/');
-	// else if ($_SESSION['USER_LOGIN_IN'] != $level) MessageSend(1, 'Данная сртаница доступна только для пользователей.', '/');
-}
-
 
 function head($title) 
 {

@@ -1,7 +1,14 @@
 <?php
+	if (empty($_SESSION['USER_LOGIN_IN']) or $_SESSION['USER_LOGIN_IN']!=1){
+		head('Ошибка');
+		echo '<h1><label>У вас недостаточно прав!!!</label></h1>
+			<a href="/">Вернуться на главную</a>';
+		footer();
+		exit();
+	}
+
 	require_once("models/article.php");
 	$records = getAllRecords($link);
-
 
 
 	if (@$_POST['enter'] and $module == 'editArticle') {

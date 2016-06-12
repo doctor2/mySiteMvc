@@ -1,7 +1,10 @@
 <?php
 	function getAllComments($link, $id)
 	{
-		$query = sprintf("SELECT * FROM comments WHERE art_id=%d ORDER BY id DESC",(int)$id);
+		//$query = sprintf("SELECT * FROM comments WHERE art_id=%d ORDER BY id DESC",(int)$id);
+		$query = sprintf("SELECT users.name,comments.comment,comments.created FROM comments, users  WHERE comments.user_id = users.id AND art_id=%d ORDER BY comments.id DESC",(int)$id);
+
+
 		$result = mysqli_query($link,$query);
 
 		if (!$result) die (mysqli_error($link));
@@ -12,20 +15,17 @@
 		for ($i=0; $i < $number; $i++) { 
 			$comments[] = mysqli_fetch_assoc($result);
 		}
-			//mysqli_close($link);
 		return $comments;
 		
 	}
-	function addComment($link, $id, $created, $author, $comment)
+	function addComment($link, $id, $userId, $created, $comment)
 	{
 		$comment = trim($comment);
-		if (($author)&&($created)&&($comment))
+		if (($userId)&&($created)&&($comment))
 		{
-			$author = prepareLineToQuery($link, $author);
 			$created = prepareLineToQuery($link, $created);
 			$comment = prepareLineToQuery($link, $comment);
-			$query = sprintf("INSERT INTO comments (author, created, comment, art_id) VALUES ('%s',
-				'%s', '%s', '%d')",$author, $created, $comment, (int) $id);
+			$query = sprintf("INSERT INTO comments ( created, comment, user_id, art_id) VALUES ('%s', '%s', '%d', '%d')", $created, $comment,(int) $userId, (int) $id);
 
 			$result = mysqli_query($link,$query);
 			
