@@ -1,5 +1,6 @@
 <?php
 error_reporting(E_ALL);//выводит все допущенные ошибки
+session_start();
 require_once("database.php");
 $link = connectDb();
 
@@ -27,15 +28,31 @@ if ($_SERVER['REQUEST_URI'] == '/') {
 }
 
 
-if ($page == 'index') include("views/articles.php");
+if ($page == 'index') {
+	include("views/articles.php");
+}
 else if ($page == 'article' and $module == 'id') include("/controllers/articleController.php");
 else if ($page == 'admin') include("/controllers/adminController.php");
+else if ($page == 'account') include("/controllers/accountController.php");
 
 
 function prepareLineToQuery (&$link, $line) {
-	return mysqli_real_escape_string($link, htmlspecialchars(trim($line)));
-	// return nl2br(htmlspecialchars(trim($line), ENT_QUOTES), false);
+	 return mysqli_real_escape_string($link, trim($line));
+	// return nl2br(htmlspecialchars(trim($line), ENT_QUOTES), false); для вывода
 }
+
+function login($level) {
+	if ($level<0)
+	{
+		head('Ошибка');
+		echo "<h1> Страница не доступна </h1>";
+		footer();
+		exit();
+	}
+	// if ($level <= 0 and $_SESSION['USER_LOGIN_IN'] != $level) MessageSend(1, 'Данная страница доступна только для гостей.', '/');
+	// else if ($_SESSION['USER_LOGIN_IN'] != $level) MessageSend(1, 'Данная сртаница доступна только для пользователей.', '/');
+}
+
 
 function head($title) 
 {

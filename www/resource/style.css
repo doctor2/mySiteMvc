@@ -8,6 +8,10 @@ body{
 		min-height: 600px;
 
 }
+.container  label{
+	font-style: italic;
+	color: bisque;
+	}
 .header{
 	background-color: rgba(4, 72, 97, 0.6);
 	color:rgba(198,92,255,0.8);
@@ -51,6 +55,7 @@ footer{
 .content{
 	margin-top: -10px;
 }
+
 /*----------------------------------------------------------*/
 
 /*-------------------Админка------------*/
@@ -82,7 +87,7 @@ tr:nth-child(2n)
 /*------------------------------------------------------*/
 /*----------editArticle-----------*/
 form{
-	margin-top: 15px;
+	margin-top: 20px;
 }
 form label{
 	padding-right:30px;
@@ -93,6 +98,26 @@ form label{
 form label:nth-child(3){
 	display: block;
 }
-input[type="submit"]{
+
+input[type="submit"],input[type="reset"]{
 	padding: 5px;
+}
+/*-----------логин - register---------*/
+.page{
+	margin-bottom: 350px;
+}
+.page div{
+	position: absolute;
+	right: 200px;
+	top:120px;
+	width: 300px;
+	background-color: #ABF; 
+	opacity: 0.8;
+	padding: 10px 15px 25px 35px;
+	border-radius: 30px;
+	border: 5px solid #412611;
+} 
+.page form input{
+	padding: 2px;
+	margin-bottom: 5px;
 }

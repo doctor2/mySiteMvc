@@ -1,4 +1,8 @@
 <?php 
+	if (empty($_SESSION['USER_LOGIN_IN']) or $_SESSION['USER_LOGIN_IN']!=1){
+		header("Location: /account/login");
+		exit();
+	}
 head("Панель администратора");
 ?>
 <div class="table">
