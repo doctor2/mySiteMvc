@@ -1,13 +1,29 @@
 <?php
 	require_once("models/article.php");
 	$records = getAllRecords($link);
-	// if (@$_POST['enter']) //$_SERVER['REQUEST_METHOD'] =="POST"
-	// 	addComment($link,$articleNumber,$_POST['created'], $_POST['author'], $_POST['comment']);
 
-	// $record = getRecord($link, $articleNumber);
-	// $comments = getAllComments($link, $articleNumber);
-	if ($Module == "editArticle") include("views/articleEdit.php");
-	else if ($Module == "createArticle" );
-	else if ($Module == "editArticle" );
-	else include("views/admin.php");
+
+
+	if (@$_POST['enter'] and $module == 'editArticle') {
+		editRecord($link, $parametrs['id'] ,$_POST['title'], $_POST['date'], $_POST['content']);
+		header("Location: /admin");
+		exit();
+	}
+	if (@$_POST['enter'] and $module == 'createArticle') {
+		addRecord($link, $_POST['title'], $_POST['date'], $_POST['content']);
+		header("Location: /admin");
+		exit();
+	}
+	if ( $module == 'deleteArticle' and $parametrs['id']) {
+		deleteRecord($link, $parametrs['id']);
+		header("Location: /admin");
+		exit();
+	}
+
+	if ($module == "editArticle" and $parametrs['id']) {
+		$record = getRecord($link, $parametrs['id']);
+		include("views/admin/articleEdit.php");
+	}
+	else if ($module == "createArticle" ) include("views/admin/articleCreate.php");
+	else include("views/admin/admin.php");
 ?>

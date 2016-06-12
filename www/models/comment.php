@@ -21,9 +21,9 @@
 		$comment = trim($comment);
 		if (($author)&&($created)&&($comment))
 		{
-			$author = mysqli_real_escape_string($link, trim($author));
-			$created = mysqli_real_escape_string($link, trim($created));
-			$comment = mysqli_real_escape_string($link, trim($comment));
+			$author = prepareLineToQuery($link, $author);
+			$created = prepareLineToQuery($link, $created);
+			$comment = prepareLineToQuery($link, $comment);
 			$query = sprintf("INSERT INTO comments (author, created, comment, art_id) VALUES ('%s',
 				'%s', '%s', '%d')",$author, $created, $comment, (int) $id);
 

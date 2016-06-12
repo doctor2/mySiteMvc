@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL);//выводит все допущенные ошибки
 
 function connectDb(){
 	$localhost = "localhost";

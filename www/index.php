@@ -1,10 +1,10 @@
 <?php
+error_reporting(E_ALL);//выводит все допущенные ошибки
 require_once("database.php");
 $link = connectDb();
 
 if ($_SERVER['REQUEST_URI'] == '/') {
-	$Page = 'index';
-	$Module = 'index';
+	$page = 'index'; $module = 'index';
 } else {
 	$URL_Path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 	// print_r($URL_Path);	
@@ -12,26 +12,30 @@ if ($_SERVER['REQUEST_URI'] == '/') {
 	$URL_Parts = explode('/', trim($URL_Path, ' /'));
 	// print_r($URL_Parts);
 	// echo '2<br>';
-	$Page = array_shift($URL_Parts);
-	// print_r($Page);
+	$page = array_shift($URL_Parts);
+	// print_r($page);
 	// echo '<br>';
-	$Module = array_shift($URL_Parts);
-	// print_r($Module);
+	$module = array_shift($URL_Parts);
+	// print_r($module);
 	// print_r($URL_Parts);
-
-	$articleNumber = 0;
-	if (!empty($Module)  and !empty($URL_Parts)) {
-		$articleNumber = $URL_Parts[0];
+	$parametrs = array();
+	if (!empty($module)  and count($URL_Parts) == 1)
+		$parametrs[$module] = $URL_Parts[0];
+	if (!empty($module)  and count($URL_Parts) == 2) {
+		$parametrs[$URL_Parts[0]] = $URL_Parts[1];
 	}
 }
 
 
-if ($Page == 'index') include("views/articles.php");
-else if ($Page == 'article' and $Module == 'id') include("/controllers/articleController.php");
-else if ($Page == 'admin') include("/controllers/adminController.php");
+if ($page == 'index') include("views/articles.php");
+else if ($page == 'article' and $module == 'id') include("/controllers/articleController.php");
+else if ($page == 'admin') include("/controllers/adminController.php");
 
 
-
+function prepareLineToQuery (&$link, $line) {
+	return mysqli_real_escape_string($link, htmlspecialchars(trim($line)));
+	// return nl2br(htmlspecialchars(trim($line), ENT_QUOTES), false);
+}
 
 function head($title) 
 {

@@ -11,7 +11,7 @@ head("Главная");
 			<div>Дата публикации: <?=$record['date']?></div>
 			<br>
 			<div>
-				<?=$record['content']?>
+				<?=substr($record['content'],0,strripos(substr($record['content'],0,650),' ')).'...'?>
 			</div>
 		</div>
 		<?php endforeach; ?>

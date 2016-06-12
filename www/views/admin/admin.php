@@ -19,8 +19,8 @@ head("Панель администратора");
 				<td>'.$record['title'].'</td> 
 				<td>'.substr($record['content'],0,strripos(substr($record['content'],0,700),' ')).'</td>
 				<td>'.$record['date'].'</td>
-				<td><a href="admin/editArticle/id/'.$record['id'].'">Редактировать</a></td>
-				<td><a href="deleteArticle/id/'.$record['id'].'">Удалить</a></td>
+				<td><a href="/admin/editArticle/id/'.$record['id'].'">Редактировать</a></td>
+				<td><a href="/admin/deleteArticle/id/'.$record['id'].'">Удалить</a></td>
 			</tr>';
 		}
 		?>

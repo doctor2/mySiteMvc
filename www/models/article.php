@@ -1,40 +1,63 @@
 <?php
-	function getAllRecords($link){
-		$query = "SELECT * FROM articles ORDER BY id DESC";
-		$result = mysqli_query($link,$query);
+function getAllRecords($link){
+	$query = "SELECT * FROM articles ORDER BY id DESC";
+	$result = mysqli_query($link,$query);
 
-		if (!$result) die (mysqli_error($link));
+	if (!$result) die (mysqli_error($link));
 
-		$number = mysqli_num_rows($result);
-		$records = array();
+	$number = mysqli_num_rows($result);
+	$records = array();
 
-		for ($i=0; $i < $number; $i++) { 
-			$records[] = mysqli_fetch_assoc($result);
-		}
-		return $records;
+	for ($i=0; $i < $number; $i++) { 
+		$records[] = mysqli_fetch_assoc($result);
 	}
+	return $records;
+}
 
-	function getRecord($link, $id)
+function getRecord($link, $id)
+{
+	$query = sprintf("SELECT * FROM articles WHERE id=%d",(int) $id);
+	$result = mysqli_query($link, $query);
+
+	if (!$result) die (mysqli_error($link));
+
+	$record = mysqli_fetch_assoc($result);
+
+	return $record;
+}
+
+function addRecord($link, $title, $date, $content){
+	$content = trim($content);
+	if (($title)&&($date)&&($content))
 	{
-		$query = sprintf("SELECT * FROM articles WHERE id=%d",(int) $id);
+		$title = prepareLineToQuery($link, $title);
+		$date = prepareLineToQuery($link, $date);
+		$content = prepareLineToQuery($link, $content);
+		$query = sprintf("INSERT INTO articles (title, date, content) VALUES ('%s','%s', '%s')", $title, $date, $content);
 		$result = mysqli_query($link, $query);
 
 		if (!$result) die (mysqli_error($link));
-
-		$record = mysqli_fetch_assoc($result);
-
-		return $record;
 	}
+}
 
-	function addRecord($title, $date, $content){
-		
-	}
+function editRecord($link, $id, $title, $date, $content){
+		$content = trim($content);
+	if (($title)&&($date)&&($content))
+	{
+		$title = prepareLineToQuery($link, $title);
+		$date = prepareLineToQuery($link, $date);
+		$content = prepareLineToQuery($link, $content);
+		$query = sprintf("UPDATE articles SET title='%s', date='%s', 
+			content='%s' WHERE id=%d ", $title, $date, $content, (int) $id);
+		$result = mysqli_query($link, $query);
 
-	function editRecord($id, $title, $date, $content){
-		
+		if (!$result) die (mysqli_error($link));
 	}
+}
 
-	function deleteRecord($id){
-		
-	}
+function deleteRecord($link, $id){
+	$query = sprintf("DELETE FROM articles WHERE id = %d ", (int) $id);
+		$result = mysqli_query($link, $query);
+		if (!$result) die (mysqli_error($link));
+}
 ?>

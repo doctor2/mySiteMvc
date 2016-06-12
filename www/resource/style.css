@@ -6,6 +6,7 @@ body{
 }
 .container{
 		min-height: 600px;
+
 }
 .header{
 	background-color: rgba(4, 72, 97, 0.6);
@@ -64,6 +65,7 @@ table {
 	margin: 30px auto;
 	border-collapse: collapse;
 	text-align: left;
+	min-width: 1000px;
 
 }
 tr td,tr th{
@@ -78,3 +80,19 @@ tr:nth-child(2n)
     background: rgba(145,205,255, 0.9);
 }
 /*------------------------------------------------------*/
+/*----------editArticle-----------*/
+form{
+	margin-top: 15px;
+}
+form label{
+	padding-right:30px;
+	font-size:1.3em;
+	font-style: italic;
+	color: bisque;
+}
+form label:nth-child(3){
+	display: block;
+}
+input[type="submit"]{
+	padding: 5px;
+}
