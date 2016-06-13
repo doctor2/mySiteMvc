@@ -3,8 +3,8 @@
 
 		$query = sprintf("SELECT * FROM users WHERE login ='%s'",  prepareLineToQuery($link,$_POST['login']));
 		$result = mysqli_fetch_assoc(mysqli_query($link, $query));
-
-		if  (md5($_POST['password']) == $result['password'])
+		$password = generatePassword($_POST['password']);
+		if  ($password == $result['password'])
 		{
 			$_SESSION['USER_ID'] = $result['id'];
 			$_SESSION['USER_LOGIN'] = $result['login'];
@@ -15,9 +15,10 @@
 				header("Location: /admin");
 				exit();
 			}
-			if (@$_REQUEST['remember'] ) setcookie('user', md5($_POST['password']), strtotime('+30 days'), '/');
+			if (@$_REQUEST['remember'] ) setcookie('user', $password, strtotime('+30 days'), '/');
 			exit(header("Location: /"));
 		}
+
 		
 	}
 	if (@$_POST['enter'] and $module == 'register') 
@@ -28,7 +29,7 @@
 		{
 			$login = prepareLineToQuery($link, $_POST['login']);
 			$email = prepareLineToQuery($link, $_POST['email']);
-			$password = prepareLineToQuery($link, md5($_POST['password']));
+			$password = prepareLineToQuery($link, generatePassword($_POST['password']));
 			$name = prepareLineToQuery($link, $_POST['name']);
 			$query = sprintf("INSERT INTO users (login, email, password, name) VALUES ('%s','%s','%s','%s')", $login, $email, $password, $name);
 			$result = mysqli_query($link, $query);

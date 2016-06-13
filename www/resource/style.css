@@ -1,12 +1,12 @@
 * {margin: 0; padding: 0 }
 body{
-	background: url(/resource/images/bg.jpg) 100% 100%  no-repeat;
-	background-size: cover; /* Масштабируем фон */
-	width: 100%;
+	background: url(/resource/images/bg.jpg)  no-repeat; 
+	background-size: cover; /*Масштабируем фон */
 }
 .container{
-		min-height: 600px;
 
+	min-width: 1050px;
+	min-height: 600px;
 }
 .container  label{
 	font-style: italic;
@@ -14,9 +14,17 @@ body{
 	}
 .header{
 	background-color: rgba(4, 72, 97, 0.6);
-	color:rgba(198,92,255,0.8);
 	padding: 5px 0 5px 10%;
 	font-style: italic;
+	font-family: serif;
+	border-radius: 0 0 40px 40px;
+	margin-top: -10px;
+	margin-bottom: 10px;
+}
+.header a{
+	padding: 10px;
+	color:rgba(240,255,255,0.7) !important;
+	/*border:2px solid black;*/
 }
 .adminpanel {
 	float: right;
@@ -71,10 +79,10 @@ footer{
 	background: rgba(255,235,205,0.1);
 }
 table {
-	margin: 30px auto;
-	border-collapse: collapse;
+	margin: 30px auto 15px auto;
+	/*border-collapse: collapse;*/
 	text-align: left;
-	min-width: 1000px;
+	min-width: 800px;
 
 }
 tr td,tr th{

@@ -57,6 +57,10 @@ function paginator ($link,$path)
 		</nav>';
 }
 
+function generatePassword ($password) {
+	return md5('@!Doc25'.md5('632'.$password.'123'));
+}
+
 function head($title) 
 {
 	echo '<!DOCTYPE html>
@@ -69,9 +73,11 @@ function head($title)
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
 	</head>
 	<body>
-		<header class="header"> <h1><a href="/">Живой журнал представляет!</a>
-</h1></header>
-		<div class="container">';
+		<div class="container">
+		<header class="header"> 
+			<h1><a href="/">Живой журнал представляет!</a></h1>				
+		</header>
+		';
 }
 
 function footer () 
