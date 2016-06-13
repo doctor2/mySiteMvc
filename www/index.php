@@ -1,8 +1,19 @@
 <?php
 error_reporting(E_ALL);//выводит все допущенные ошибки
 session_start();
+define("NUMBER_OF_ARTICLE",3);
 require_once("database.php");
 $link = connectDb();
+
+if (@$_SESSION['USER_LOGIN_IN'] != 1 and @$_COOKIE['user']) {
+	$result = mysqli_fetch_assoc(mysqli_query($link, "SELECT `id`, `name`, `email`, `login` FROM `users` WHERE `password` = '$_COOKIE[user]'"));
+	$_SESSION['USER_LOGIN'] = $result['login'];
+	$_SESSION['USER_ID'] = $result['id'];
+	$_SESSION['USER_NAME'] = $result['name'];
+	$_SESSION['USER_EMAIL'] = $result['email'];
+	$_SESSION['USER_LOGIN_IN'] = 1;
+}
+
 
 if ($_SERVER['REQUEST_URI'] == '/') {
 	$page = 'index'; $module = 'index';
@@ -20,10 +31,9 @@ if ($_SERVER['REQUEST_URI'] == '/') {
 }
 
 
-if ($page == 'index') {
-	include("views/articles.php");
-}
-else if ($page == 'article' and $module == 'id') include("/controllers/articleController.php");
+if ($page == 'index') include("views/articles.php");
+else if ($page == 'articles') include("views/articles.php");
+else if ($page == 'article' and @$parametrs['id']) include("/controllers/articleController.php");
 else if ($page == 'admin') include("/controllers/adminController.php");
 else if ($page == 'account') include("/controllers/accountController.php");
 
@@ -31,6 +41,20 @@ else if ($page == 'account') include("/controllers/accountController.php");
 function prepareLineToQuery (&$link, $line) {
 	 return mysqli_real_escape_string($link, trim($line));
 	// return nl2br(htmlspecialchars(trim($line), ENT_QUOTES), false); для вывода
+}
+
+function paginator ($link,$path)
+{
+	$numberOfPage = ceil(getNumberOfRecords($link)/NUMBER_OF_ARTICLE);
+	echo '
+		<nav>
+	  		<ul class="pagination">';
+    for ($i=1; $i <= $numberOfPage; $i++) { 
+    	echo '
+    	<li><a  href="'.$path.$i.'">'.$i.'</a></li>';
+    }
+    echo '  </ul>
+		</nav>';
 }
 
 function head($title) 

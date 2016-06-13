@@ -26,7 +26,8 @@ head("Панель администратора");
 		}
 		?>
 	</table>
-	<a href="admin/createArticle">Добавить запись</a>
+	<?=paginator($link,"/admin/page/")?>
+	<a href="/admin/createArticle">Добавить запись</a>
 </div>
 
 <?php 

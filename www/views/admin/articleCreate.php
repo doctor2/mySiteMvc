@@ -5,7 +5,7 @@ head('Добавить запись');
 <form id="addRecord" name="addRecord" method="post" action="" >
 	<p>
 		<label for="title">Заголовок заметки</label>
-		<input type="text" name="title" id="title" size="100" placeholder="Назввние статьи" />
+		<input type="text" name="title" id="title" size="100" placeholder="Название статьи" />
 	</p>
 	<p>
 		<label for="date">Дата создания заметки</label>

@@ -1,5 +1,5 @@
 <?php
-	if (empty($_SESSION['USER_LOGIN_IN']) or $_SESSION['USER_LOGIN_IN']!=1){
+	if (empty($_SESSION['USER_LOGIN_IN']) or $_SESSION['USER_LOGIN_IN']!=666){
 		head('Ошибка');
 		echo '<h1><label>У вас недостаточно прав!!!</label></h1>
 			<a href="/">Вернуться на главную</a>';
@@ -8,7 +8,7 @@
 	}
 
 	require_once("models/article.php");
-	$records = getAllRecords($link);
+	// $records = getAllRecords($link);
 
 
 	if (@$_POST['enter'] and $module == 'editArticle') {
@@ -27,10 +27,18 @@
 		exit();
 	}
 
+
 	if ($module == "editArticle" and $parametrs['id']) {
 		$record = getRecord($link, $parametrs['id']);
 		include("views/admin/articleEdit.php");
 	}
 	else if ($module == "createArticle" ) include("views/admin/articleCreate.php");
-	else include("views/admin/admin.php");
+	else 
+	{
+		if (!empty($parametrs) && @$parametrs['page'])
+			$records = getLimitedRecords($link, $parametrs['page']);
+		else
+			$records = getLimitedRecords($link, 1);
+		include("views/admin/admin.php");
+	}
 ?>

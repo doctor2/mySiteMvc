@@ -21,6 +21,10 @@ body{
 .adminpanel {
 	float: right;
 }
+.pagination li a{
+	color:black !important;
+	background-color: rgba(255,228,196,0.8) !important;
+}
 footer{
 	text-align: right;
 	margin-top: 10px;
