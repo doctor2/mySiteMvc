@@ -1,7 +1,9 @@
 <?php
 error_reporting(E_ALL);//выводит все допущенные ошибки
-session_start();
 define("NUMBER_OF_ARTICLE",3);
+
+session_start();
+
 require_once("database.php");
 $link = connectDb();
 

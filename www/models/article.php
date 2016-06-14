@@ -14,16 +14,11 @@ function getAllRecords($link)
 	}
 	return $records;
 }
-function getNumberOfRecords($link)
-{
-	$query = "SELECT COUNT(*) AS num FROM articles";
-	$result =  mysqli_fetch_assoc(mysqli_query($link,$query));
-	return $result['num'];
-}
+
 function getLimitedRecords($link,$part)
 {
-	$part = ((int)$part-1)*NUMBER_OF_ARTICLE;
-	$query = sprintf("SELECT * FROM articles ORDER BY id DESC LIMIT %d,%d",$part,NUMBER_OF_ARTICLE);
+	$part = prepareLineToQuery($link,((int)$part-1)*NUMBER_OF_ARTICLE);
+	$query = sprintf("SELECT * FROM articles ORDER BY id DESC LIMIT %d,%d", $part,NUMBER_OF_ARTICLE);
 	$result = mysqli_query($link,$query);
 
 	if (!$result) die (mysqli_error($link));
@@ -35,6 +30,13 @@ function getLimitedRecords($link,$part)
 		$records[] = mysqli_fetch_assoc($result);
 	}
 	return $records;
+}
+
+function getNumberOfRecords($link)
+{
+	$query = "SELECT COUNT(*) AS num FROM articles";
+	$result =  mysqli_fetch_assoc(mysqli_query($link,$query));
+	return $result['num'];
 }
 
 function getRecord($link, $id)
