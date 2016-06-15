@@ -1,14 +1,13 @@
 <?php 
-	head($record['title']);
 	echo '
 			<div class="block">
-				<h3>'.$record['title'].'</h3>
-				<div>Дата публикации: '.$record['date'].'</div>
+				<h3>'.$this->record['title'].'</h3>
+				<div>Дата публикации: '.$this->record['date'].'</div>
 				<br>
-				<div>'.nl2br($record['content'],false).'</div>
+				<div>'.nl2br($this->record['content'],false).'</div>
 			</div>
 			<hr>';
-	foreach ($comments as &$comment){
+	foreach ($this->comments as $comment){
 		echo '
 			<div class="comment">
 				<div class="headcomment">
@@ -33,5 +32,4 @@
 	}
 	else
 		echo '<label>Добавлять комментарии могут только авторизированные пользователи!!!</label>';
-	footer();
 ?>			

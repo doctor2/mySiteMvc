@@ -1,5 +1,5 @@
 <?php 
-head("Главная");
+//head("Главная");
 ?>
 		<div class="adminpanel"><a href="/admin">Панель администратора</a></div>
 <?php 
@@ -12,7 +12,7 @@ head("Главная");
 		echo'<a href="/account/login">Вход</a>
 			<a href="/account/register">Регистрация</a>';
 
-	foreach ($records as &$record)
+	foreach ($this->records as $record)
 	 	echo'
 			<div class="block">
 				<h3><a href="/article/id/'.$record['id'].'">'.$record['title'].'</a> </h3>
@@ -22,6 +22,5 @@ head("Главная");
 					'.nl2br(substr($record['content'],0,strripos(substr($record['content'],0,600),' ')),false).'...'.'
 				</div>
 			</div>';
-	paginator($link,"/articles/page/");
-	footer();
+	paginator("/article/page/",$this->number);
  ?>

@@ -1,7 +1,3 @@
-<?php 
-head('Вход') ?>
-
-
 <div class="page">
 	<div>
 		<form method="POST" action="">
@@ -16,5 +12,3 @@ head('Вход') ?>
 		</form>
 	</div>
 </div>
-
-<?php footer() ?>

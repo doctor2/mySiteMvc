@@ -16,7 +16,7 @@ class AccountModel extends Model
 		return $records;
 	}
 
-	function addUser($link, $login, $email, $password, $name);
+	function addUser($link, $login, $email, $password, $name)
 	{
 		$login = prepareLineToQuery($link, $login);
 		$email = prepareLineToQuery($link, $email);
@@ -25,7 +25,7 @@ class AccountModel extends Model
 		$query = sprintf("INSERT INTO users (login, email, password, name) VALUES ('%s','%s','%s','%s')", $login, $email, $password, $name);
 		$result = mysqli_query($link, $query);
 	}
-	function getUser($link, $login);
+	function getUser($link, $login)
 	{
 		$query = sprintf("SELECT * FROM users WHERE login ='%s'",  prepareLineToQuery($link,$login));
 		return mysqli_fetch_assoc(mysqli_query($link, $query));

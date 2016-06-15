@@ -1,7 +1,3 @@
-<?php 
-head('Добавить запись');
-?>
-
 <form id="addRecord" name="addRecord" method="post" action="" >
 	<p>
 		<label for="title">Заголовок заметки</label>
@@ -17,6 +13,3 @@ head('Добавить запись');
 	<input type="submit" name="enter" value="Сохранить" />
 	<a href="/admin">Вернуться назад</a>
 </form>
-<?php
-footer();
-?>

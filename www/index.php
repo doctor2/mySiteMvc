@@ -4,6 +4,15 @@ error_reporting(E_ALL);//выводит все допущенные ошибки
 require_once 'core/model.php';
 require_once 'core/view.php';
 require_once 'core/controller.php';
+session_start();
+if (@$_SESSION['USER_LOGIN_IN'] != 1 and @$_COOKIE['user']) {
+	$result = mysqli_fetch_assoc(mysqli_query($link, "SELECT `id`, `name`, `email`, `login` FROM `users` WHERE `password` = '$_COOKIE[user]'"));
+	$_SESSION['USER_LOGIN'] = $result['login'];
+	$_SESSION['USER_ID'] = $result['id'];
+	$_SESSION['USER_NAME'] = $result['name'];
+	$_SESSION['USER_EMAIL'] = $result['email'];
+	$_SESSION['USER_LOGIN_IN'] = 1;
+}
 require_once("database.php");
 require_once("settings.php");
 $link = connectDb();
@@ -40,9 +49,9 @@ function prepareLineToQuery (&$link, $line) {
 	// return nl2br(htmlspecialchars(trim($line), ENT_QUOTES), false); для вывода
 }
 
-function paginator ($link,$path)
+function paginator ($path,$number)
 {
-	$numberOfPage = ceil(getNumberOfRecords($link)/NUMBER_OF_ARTICLE);
+	$numberOfPage = ceil($number/NUMBER_OF_ARTICLE);
 	echo '
 		<nav>
 	  		<ul class="pagination">';

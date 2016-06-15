@@ -1,6 +1,3 @@
-<?php 	
-	head("Панель администратора");
-?>
 <div class="table">
 	<table >
 		<tr>
@@ -12,7 +9,7 @@
 			<th>Удаление</th>
 		</tr>
 		<?php
-		foreach ($records as &$record){
+		foreach ($this->records as $record){
 			echo '
 			<tr>
 				<td>'.$record['id'].'</td>
@@ -25,10 +22,6 @@
 		}
 		?>
 	</table>
-	<?=paginator($link,"/admin/page/")?>
+	<?=paginator("/admin/page/",$this->number);?>
 	<a href="/admin/createArticle">Добавить запись</a>
 </div>
-
-<?php 
-footer();
-?>

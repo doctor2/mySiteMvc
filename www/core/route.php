@@ -8,89 +8,77 @@
 class Route
 {
 
-if ($_SERVER['REQUEST_URI'] == '/') {
-	$page = 'index'; $module = 'index';
-} else {
-		$URL_Path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-		$URL_Parts = explode('/', trim($URL_Path, ' /'));
-		$page = array_shift($URL_Parts);
-		$module = array_shift($URL_Parts);
-		$params = array();
-		if (!empty($module)  and count($URL_Parts) == 1)
-			$params[$module] = $URL_Parts[0];
-		if (!empty($module)  and count($URL_Parts) == 2) {
-			$params[$URL_Parts[0]] = $URL_Parts[1];
-	}
-}
-
-
-if ($page == 'index') include("views/articles.php");
-else if ($page == 'articles') include("views/articles.php");
-else if ($page == 'article' and @$params['id']) include("/controllers/articleController.php");
-else if ($page == 'admin') include("/controllers/adminController.php");
-else if ($page == 'account') include("/controllers/accountController.php");
-
-
 	static function start()
 	{
-		if ($_SERVER['REQUEST_URI'] == '/') 
-		{
-			$controllerName = 'article'; 
-			$actionName = 'index';
-		} else 
-		{
-			$routes = explode('/',  $_SERVER['REQUEST_URI']);
-			if ( !empty($routes[1]) )
-				$controllerName = $routes[1];
-			else if (!empty($routes[2]))
-				$actionName = $routes[2];
-			else if (count($routes)==5)
-				$params[$routes[3]] = $routes[4]; 
-		}	
+		$controllerName = 'article'; 
+		$actionName = 'index';
+		$params = array();
+		$url = strtolower(trim($_SERVER['REQUEST_URI']));
 
-		// добавляем префиксы
+		if (preg_match("/^\/(\w+)\/(\w+)\/id\/(\d+)\/?$/", $url, $match))
+		{
+			$controllerName = $match[1];
+			$actionName = $match[2];
+			$params['id'] =$match[3];
+		}
+		else if (preg_match("/^\/(\w+)\/page\/(\d+)\/?$/", $url, $match))
+		{
+			$controllerName = $match[1];
+			//$actionName = $match[2];
+			$params['page'] =$match[2];
+		}
+		else if (preg_match("/^\/(\w+)\/(id)\/(\d+)\/?$/", $url, $match))
+		{
+			$controllerName = $match[1];
+			$actionName = $match[2];
+			$params['id'] =$match[3];
+		}
+		else if (preg_match("/^\/(\w+)\/(\w+)\/?$/", $url, $match))
+		{
+			$controllerName = $match[1];
+			$actionName = $match[2];
+		}
+		else if (preg_match("/^\/(\w+)\/?$/", $url , $match))
+			$controllerName = $match[1];
+		else if ($url == '/') ;
+		else Route::ErrorPage404();
+		// echo '<pre>';
+		// print_r($match);
+
 		$controllerName = $controllerName.'Controller';
-		$actionName = $actionName;
 
-		// подцепляем файл с классом контроллера
-		$controllerFile = strtolower($controllerName).'.php';
-		$controllerPath = "/controllers/".$controllerFile;
-		if(file_exists($controllerPath))
-		{
-			include "/controllers/".$controllerFile;
-		}
-		else
-		{
-			/*
-			правильно было бы кинуть здесь исключение,
-			но для упрощения сразу сделаем редирект на страницу 404
-			*/
-			Route::ErrorPage404();
-		}
+		$controllerPath = "./controllers/".$controllerName.'.php';
+		if(file_exists($controllerPath)) include $controllerPath;
+		else Route::ErrorPage404();
 		
-		// создаем контроллер
+		$controllerName = ucfirst($controllerName);
 		$controller = new $controllerName;
-		$action = $actionName;
-		
-		if(method_exists($controller, $action))
-		{
-			// вызываем действие контроллера
-			$controller->$action();
-		}
+
+		if (!empty($params)) $controller->set('params',$params);
+
+		if(method_exists($controller, $actionName))
+			$controller->$actionName();
 		else
-		{
-			// здесь также разумнее было бы кинуть исключение
 			Route::ErrorPage404();
-		}
 	
 	}
 
-	function ErrorPage404()
+	static function ErrorPage404()
 	{
-        $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
-        exit(header('HTTP/1.1 404 Not Found'));
-		header("Status: 404 Not Found");
-		header('Location:'.$host.'404');
+		head('Ошибка');
+		echo '<h1><label>HTTP/1.1 404 Not Found</label></h1>
+			<a href="/">Вернуться на главную</a>';
+		footer();
+		exit();
+		$view = new View();
+		$view->set();
+		$view->set('title', 'Error');
+		// $this->view->set('content', $this->path.'articleEdit.php');
+        // $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
+        $view->generate();
+        //exit(header('HTTP/1.1 404 Not Found'));
+		// header("Status: 404 Not Found");
+		// header('Location:'.$host.'404');
     }
     
 }

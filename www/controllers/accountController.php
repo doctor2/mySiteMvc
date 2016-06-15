@@ -1,22 +1,25 @@
 <?php 
 class AccountController extends Controller
 {
-	$path = "account/";
+	private $path = "account/";
 	function __construct()
 	{
+		require_once("./database.php");
+		require_once ("./models/accountModel.php");
 		$this->model = new AccountModel();
 		$this->view = new View();
+		$this->link = connectDb();
 	}
 
 	function register()
 	{
 		if (@$_POST['enter']) 
 		{
-			$result = getUser($link, $_POST['login'];
-			if (empty($result) //может быть касяк!!!!!!!!!!!!!!!!!
+			$result = $this->model->getUser($this->link, $_POST['login']);
+			if (empty($result)) //может быть касяк!!!!!!!!!!!!!!!!!
 			{
-				addUser($link, $_POST['login'], $_POST['email'], $_POST['password'], $_POST['name']);
-				$result = getUser($link, $_POST['login'];
+				$this->model->addUser($this->link, $_POST['login'], $_POST['email'], $_POST['password'], $_POST['name']);
+				$result = getUser($this->link, $_POST['login']);
 				$_SESSION['USER_ID'] = $result['id'];
 				$_SESSION['USER_LOGIN'] = $result['login'];
 				$_SESSION['USER_NAME'] = $result['name'];
@@ -27,13 +30,15 @@ class AccountController extends Controller
 				exit();
 			}
 		}
-		$this->view->generate($path.'register.php', 'template_view.php');
+		$this->view->set('title', 'Регистрация');
+		$this->view->set('content', $this->path.'register.php');
+		$this->view->generate();
 	}
 
 	function login()
 	{
-		if (@$_POST['enter'] and $module == 'login') {
-			$result = getUser($link, $_POST['login'];
+		if (@$_POST['enter'] ) {
+			$result = $this->model->getUser($this->link, $_POST['login']);
 			$password = generatePassword($_POST['password']);
 			if  ($password == $result['password'])
 			{
@@ -49,9 +54,10 @@ class AccountController extends Controller
 				if (@$_REQUEST['remember'] ) setcookie('user', $password, strtotime('+30 days'), '/');
 				exit(header("Location: /"));
 			}
-			$this->view->generate($path.'login.php', 'template_view.php', $data);
-
 		}
+		$this->view->set('title', 'Вход');
+		$this->view->set('content', $this->path.'login.php');
+		$this->view->generate();
 	}
 
 	function logout()

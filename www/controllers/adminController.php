@@ -1,6 +1,7 @@
 <?php
 class AdminController extends Controller
 {
+	private $path = 'admin/';
 	//При создании объекта класса имя передается в эту функцию
 	// function __autoload($class_name) 
 	// {
@@ -8,10 +9,14 @@ class AdminController extends Controller
 	// }
 	function __construct()
 	{
-		require_once("models/article.php");
-		$this->model = new ArticlModel();
+		self::checkAccess();
+		require_once("./database.php");
+		require_once ("./models/articleModel.php");
+		$this->model = new ArticleModel();
 		$this->view = new View();
+		$this->link = connectDb();
 	}
+	
 	private function checkAccess()
 	{
 		if (empty($_SESSION['USER_LOGIN_IN']) or $_SESSION['USER_LOGIN_IN']!=666){
@@ -22,34 +27,51 @@ class AdminController extends Controller
 		exit();
 		}
 	}
+	function index()
+	{
+		
+		if (!empty($this->params['page']))
+			$records = $this->model->getLimitedRecords($this->link, $this->params['page']);
+		else
+			$records = $this->model->getLimitedRecords($this->link, 1);
+		$this->view->set('title', 'Админка');
+		$this->view->set('content', $this->path.'index.php');
+		$this->view->set('number', $this->model->getNumberOfRecords($this->link));
+		$this->view->set('records', $records);
+		$this->view->generate();
+	}
 
 	function editArticle()
 	{
-		checkAccess();
 		if (@$_POST['enter']) {
-			editRecord($link, $parametrs['id'] ,$_POST['title'], $_POST['date'], $_POST['content']);
+			$this->model->editRecord($this->link, $this->params['id'] ,$_POST['title'], $_POST['date'], $_POST['content']);
 			header("Location: /admin");
 			exit();
 		}
+		$record = $this->model->getRecord($this->link, $this->params['id']);
+		$this->view->set('title', 'Редактирование');
+		$this->view->set('content', $this->path.'articleEdit.php');
+		$this->view->set('record', $record);
+		$this->view->generate();
 
 	}
 
 	function createArticle()
 	{
-		checkAccess();
 		if (@$_POST['enter']) {
-			addRecord($link, $_POST['title'], $_POST['date'], $_POST['content']);
+			$this->model->addRecord($this->link, $_POST['title'], $_POST['date'], $_POST['content']);
 			header("Location: /admin");
 			exit();
 		}
-		
+		$this->view->set('title', 'Добавить запись');
+		$this->view->set('content', $this->path.'articleCreate.php');
+		$this->view->generate();
 	}
 
 	function deleteArticle()
 	{
-		checkAccess();
-		if ( $parametrs['id']) {
-			deleteRecord($link, $parametrs['id']);
+		if ( $this->params['id']) {
+			$this->model->deleteRecord($this->link, $this->params['id']);
 			header("Location: /admin");
 			exit();
 		}
@@ -58,21 +80,20 @@ class AdminController extends Controller
 
 	
 	
-	
 
 
-	if ($module == "editArticle" and $parametrs['id']) {
-		$record = getRecord($link, $parametrs['id']);
-		include("views/admin/articleEdit.php");
-	}
-	else if ($module == "createArticle" ) include("views/admin/articleCreate.php");
-	else 
-	{
-		if (!empty($parametrs) && @$parametrs['page'])
-			$records = getLimitedRecords($link, $parametrs['page']);
-		else
-			$records = getLimitedRecords($link, 1);
-		include("views/admin/admin.php");
-	}
+	// if ($module == "editArticle" and $this->params['id']) {
+	// 	$record = getRecord($this->$link, $this->params['id']);
+	// 	include("views/admin/articleEdit.php");
+	// }
+	// else if ($module == "createArticle" ) include("views/admin/articleCreate.php");
+	// else 
+	// {
+	// 	if (!empty($this->params) && @$this->params['page'])
+	// 		$records = getLimitedRecords($this->$link, $this->params['page']);
+	// 	else
+	// 		$records = getLimitedRecords($this->$link, 1);
+	// 	include("views/admin/admin.php");
+	// }
 }
 ?>
