@@ -1,6 +1,6 @@
 * {margin: 0; padding: 0 }
 body{
-	background: url(/resource/images/bg.jpg)  no-repeat; 
+	background: url(/content/images/bg.jpg)  no-repeat; 
 	background-size: cover; /*Масштабируем фон */
 }
 .container{

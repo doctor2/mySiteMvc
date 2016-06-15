@@ -7,6 +7,6 @@ Options All -Indexes
 RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]
 RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^resource/(.*)$ resource/$1 [L]
+RewriteRule ^content/(.*)$ content/$1 [L]
 RewriteRule ^.*$ [NC,L]
 RewriteRule ^.*$ index.php [NC,L]

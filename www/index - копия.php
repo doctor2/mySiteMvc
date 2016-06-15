@@ -1,36 +1,11 @@
 <?php
 error_reporting(E_ALL);//выводит все допущенные ошибки
-// подключаем файлы ядра
-require_once 'core/model.php';
-require_once 'core/view.php';
-require_once 'core/controller.php';
-require_once("database.php");
-$link = connectDb();
-/*
-Здесь обычно подключаются дополнительные модули, реализующие различный функционал:
-	> аутентификацию
-	> кеширование
-	> работу с формами
-	> абстракции для доступа к данным
-	> ORM
-	> Unit тестирование
-	> Benchmarking
-	> Работу с изображениями
-	> Backup
-	> и др.
-*/
-
-require_once 'core/route.php';
-Route::start(); // запускаем маршрутизатор
-
-
-
 define("NUMBER_OF_ARTICLE",3);
 
 session_start();
 
-
-
+require_once("database.php");
+$link = connectDb();
 
 if (@$_SESSION['USER_LOGIN_IN'] != 1 and @$_COOKIE['user']) {
 	$result = mysqli_fetch_assoc(mysqli_query($link, "SELECT `id`, `name`, `email`, `login` FROM `users` WHERE `password` = '$_COOKIE[user]'"));
