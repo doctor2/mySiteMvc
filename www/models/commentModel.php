@@ -1,4 +1,7 @@
 <?php
+class CommentModel extends Model
+{
+	
 	function getAllComments($link, $id)
 	{
 		//$query = sprintf("SELECT * FROM comments WHERE art_id=%d ORDER BY id DESC",(int)$id);
@@ -33,5 +36,7 @@
 			//mysqli_close($link);
 		}	
 	}
+}
+	
 
 ?>

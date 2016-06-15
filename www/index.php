@@ -5,6 +5,7 @@ require_once 'core/model.php';
 require_once 'core/view.php';
 require_once 'core/controller.php';
 require_once("database.php");
+require_once("settings.php");
 $link = connectDb();
 /*
 Здесь обычно подключаются дополнительные модули, реализующие различный функционал:
@@ -25,44 +26,13 @@ Route::start(); // запускаем маршрутизатор
 
 
 
-define("NUMBER_OF_ARTICLE",3);
-
-session_start();
 
 
 
 
-if (@$_SESSION['USER_LOGIN_IN'] != 1 and @$_COOKIE['user']) {
-	$result = mysqli_fetch_assoc(mysqli_query($link, "SELECT `id`, `name`, `email`, `login` FROM `users` WHERE `password` = '$_COOKIE[user]'"));
-	$_SESSION['USER_LOGIN'] = $result['login'];
-	$_SESSION['USER_ID'] = $result['id'];
-	$_SESSION['USER_NAME'] = $result['name'];
-	$_SESSION['USER_EMAIL'] = $result['email'];
-	$_SESSION['USER_LOGIN_IN'] = 1;
-}
 
 
-if ($_SERVER['REQUEST_URI'] == '/') {
-	$page = 'index'; $module = 'index';
-} else {
-		$URL_Path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-		$URL_Parts = explode('/', trim($URL_Path, ' /'));
-		$page = array_shift($URL_Parts);
-		$module = array_shift($URL_Parts);
-		$parametrs = array();
-		if (!empty($module)  and count($URL_Parts) == 1)
-			$parametrs[$module] = $URL_Parts[0];
-		if (!empty($module)  and count($URL_Parts) == 2) {
-			$parametrs[$URL_Parts[0]] = $URL_Parts[1];
-	}
-}
 
-
-if ($page == 'index') include("views/articles.php");
-else if ($page == 'articles') include("views/articles.php");
-else if ($page == 'article' and @$parametrs['id']) include("/controllers/articleController.php");
-else if ($page == 'admin') include("/controllers/adminController.php");
-else if ($page == 'account') include("/controllers/accountController.php");
 
 
 function prepareLineToQuery (&$link, $line) {

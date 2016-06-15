@@ -8,52 +8,56 @@
 class Route
 {
 
+if ($_SERVER['REQUEST_URI'] == '/') {
+	$page = 'index'; $module = 'index';
+} else {
+		$URL_Path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+		$URL_Parts = explode('/', trim($URL_Path, ' /'));
+		$page = array_shift($URL_Parts);
+		$module = array_shift($URL_Parts);
+		$params = array();
+		if (!empty($module)  and count($URL_Parts) == 1)
+			$params[$module] = $URL_Parts[0];
+		if (!empty($module)  and count($URL_Parts) == 2) {
+			$params[$URL_Parts[0]] = $URL_Parts[1];
+	}
+}
+
+
+if ($page == 'index') include("views/articles.php");
+else if ($page == 'articles') include("views/articles.php");
+else if ($page == 'article' and @$params['id']) include("/controllers/articleController.php");
+else if ($page == 'admin') include("/controllers/adminController.php");
+else if ($page == 'account') include("/controllers/accountController.php");
+
+
 	static function start()
 	{
-		// контроллер и действие по умолчанию
-		$controllerName = 'index';
-		$actionName = 'index';
-		
-		$routes = explode('/', $_SERVER['REQUEST_URI']);
-
-		// получаем имя контроллера
-		if ( !empty($routes[1]) )
-		{	
-			$controllerName = $routes[1];
-		}
-		
-		// получаем имя экшена
-		if ( !empty($routes[2]) )
+		if ($_SERVER['REQUEST_URI'] == '/') 
 		{
-			$actionName = $routes[2];
-		}
+			$controllerName = 'article'; 
+			$actionName = 'index';
+		} else 
+		{
+			$routes = explode('/',  $_SERVER['REQUEST_URI']);
+			if ( !empty($routes[1]) )
+				$controllerName = $routes[1];
+			else if (!empty($routes[2]))
+				$actionName = $routes[2];
+			else if (count($routes)==5)
+				$params[$routes[3]] = $routes[4]; 
+		}	
 
 		// добавляем префиксы
-		$model_name = 'Model_'.$controllerName;
-		$controllerName = 'Controller_'.$controllerName;
-		$actionName = 'action_'.$actionName;
-
-		/*
-		echo "Model: $model_name <br>";
-		echo "Controller: $controllerName <br>";
-		echo "Action: $actionName <br>";
-		*/
-
-		// подцепляем файл с классом модели (файла модели может и не быть)
-
-		$model_file = strtolower($model_name).'.php';
-		$model_path = "application/models/".$model_file;
-		if(file_exists($model_path))
-		{
-			include "application/models/".$model_file;
-		}
+		$controllerName = $controllerName.'Controller';
+		$actionName = $actionName;
 
 		// подцепляем файл с классом контроллера
-		$controller_file = strtolower($controllerName).'.php';
-		$controller_path = "application/controllers/".$controller_file;
-		if(file_exists($controller_path))
+		$controllerFile = strtolower($controllerName).'.php';
+		$controllerPath = "/controllers/".$controllerFile;
+		if(file_exists($controllerPath))
 		{
-			include "application/controllers/".$controller_file;
+			include "/controllers/".$controllerFile;
 		}
 		else
 		{
@@ -84,7 +88,7 @@ class Route
 	function ErrorPage404()
 	{
         $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
-        header('HTTP/1.1 404 Not Found');
+        exit(header('HTTP/1.1 404 Not Found'));
 		header("Status: 404 Not Found");
 		header('Location:'.$host.'404');
     }

@@ -1,57 +1,60 @@
 <?php 
-	if (@$_POST['enter'] and $module == 'login') {
+class AccountController extends Controller
+{
+	$path = "account/";
+	function __construct()
+	{
+		$this->model = new AccountModel();
+		$this->view = new View();
+	}
 
-		$query = sprintf("SELECT * FROM users WHERE login ='%s'",  prepareLineToQuery($link,$_POST['login']));
-		$result = mysqli_fetch_assoc(mysqli_query($link, $query));
-		$password = generatePassword($_POST['password']);
-		if  ($password == $result['password'])
+	function register()
+	{
+		if (@$_POST['enter']) 
 		{
-			$_SESSION['USER_ID'] = $result['id'];
-			$_SESSION['USER_LOGIN'] = $result['login'];
-			$_SESSION['USER_NAME'] = $result['name'];
-			$_SESSION['USER_PASSWORD'] = $result['password'];
-			$_SESSION['USER_LOGIN_IN'] = ($result['login'] == 'admin') ?666:1 ;
-			if ($result['login'] == 'admin') {
-				header("Location: /admin");
+			$result = getUser($link, $_POST['login'];
+			if (empty($result) //может быть касяк!!!!!!!!!!!!!!!!!
+			{
+				addUser($link, $_POST['login'], $_POST['email'], $_POST['password'], $_POST['name']);
+				$result = getUser($link, $_POST['login'];
+				$_SESSION['USER_ID'] = $result['id'];
+				$_SESSION['USER_LOGIN'] = $result['login'];
+				$_SESSION['USER_NAME'] = $result['name'];
+				$_SESSION['USER_PASSWORD'] = $result['password'];
+				$_SESSION['USER_LOGIN_IN'] = ($result['login'] == 'admin') ?666:1 ;
+
+				header("Location: /");
 				exit();
 			}
-			if (@$_REQUEST['remember'] ) setcookie('user', $password, strtotime('+30 days'), '/');
-			exit(header("Location: /"));
 		}
-
-		
+		$this->view->generate($path.'register.php', 'template_view.php');
 	}
-	if (@$_POST['enter'] and $module == 'register') 
+
+	function login()
 	{
-		$query = sprintf("SELECT * FROM users WHERE login ='%s'",  prepareLineToQuery($link,$_POST['login']));
-		$result = mysqli_num_rows(mysqli_query($link, $query));
-		if ($result !=1)
-		{
-			$login = prepareLineToQuery($link, $_POST['login']);
-			$email = prepareLineToQuery($link, $_POST['email']);
-			$password = prepareLineToQuery($link, generatePassword($_POST['password']));
-			$name = prepareLineToQuery($link, $_POST['name']);
-			$query = sprintf("INSERT INTO users (login, email, password, name) VALUES ('%s','%s','%s','%s')", $login, $email, $password, $name);
-			$result = mysqli_query($link, $query);
+		if (@$_POST['enter'] and $module == 'login') {
+			$result = getUser($link, $_POST['login'];
+			$password = generatePassword($_POST['password']);
+			if  ($password == $result['password'])
+			{
+				$_SESSION['USER_ID'] = $result['id'];
+				$_SESSION['USER_LOGIN'] = $result['login'];
+				$_SESSION['USER_NAME'] = $result['name'];
+				$_SESSION['USER_PASSWORD'] = $result['password'];
+				$_SESSION['USER_LOGIN_IN'] = ($result['login'] == 'admin') ?666:1 ;
+				if ($result['login'] == 'admin') {
+					header("Location: /admin");
+					exit();
+				}
+				if (@$_REQUEST['remember'] ) setcookie('user', $password, strtotime('+30 days'), '/');
+				exit(header("Location: /"));
+			}
+			$this->view->generate($path.'login.php', 'template_view.php', $data);
 
-
-			$query = sprintf("SELECT * FROM users WHERE login ='%s'",  $login);
-			$result = mysqli_fetch_assoc(mysqli_query($link, $query));
-			$_SESSION['USER_ID'] = $result['id'];
-			$_SESSION['USER_LOGIN'] = $result['login'];
-			$_SESSION['USER_NAME'] = $result['name'];
-			$_SESSION['USER_PASSWORD'] = $result['password'];
-			$_SESSION['USER_LOGIN_IN'] = ($result['login'] == 'admin') ?666:1 ;
-
-			header("Location: /");
-			exit();
 		}
 	}
 
-	
-	if ($module == 'login') include("/views/login.php");
-	else if ($module == 'register') include('/views/register.php');
-	else if ($module == 'logout') 
+	function logout()
 	{
 		if (@$_COOKIE['user']) {
 			setcookie('user', '', strtotime('-30 days'), '/');
@@ -60,5 +63,6 @@
 		session_unset();
 		header("Location: /");
 	}
- 	
+}
+
 ?>
