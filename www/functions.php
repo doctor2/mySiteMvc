@@ -6,6 +6,17 @@ function prepareLineToQuery (&$link, $line)
 	// return nl2br(htmlspecialchars(trim($line), ENT_QUOTES), false); для вывода
 }
 
+function addUserToSession(array $result)
+{
+	if (!empty($result)) {
+		$_SESSION['USER_ID'] = $result['id'];
+		$_SESSION['USER_LOGIN'] = $result['login'];
+		$_SESSION['USER_NAME'] = $result['name'];
+		$_SESSION['USER_PASSWORD'] = $result['password'];
+		$_SESSION['USER_LOGIN_IN'] = ($result['login'] == 'admin') ?666:1 ;
+	}	
+}
+
 function generatePassword ($password) 
 {
 	return md5('@!Doc25'.md5('632'.$password.'123'));

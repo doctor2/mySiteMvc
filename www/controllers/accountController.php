@@ -13,16 +13,11 @@ class AccountController extends Controller
 		if (@$_POST['enter']) 
 		{
 			$result = $this->model->getUser($_POST['login']);
-			if (empty($result)) //может быть касяк!!!!!!!!!!!!!!!!!
+			if (empty($result)) 
 			{
 				$this->model->addUser($_POST['login'], $_POST['email'], $_POST['password'], $_POST['name']);
 				$result = getUser($_POST['login']);
-				$_SESSION['USER_ID'] = $result['id'];
-				$_SESSION['USER_LOGIN'] = $result['login'];
-				$_SESSION['USER_NAME'] = $result['name'];
-				$_SESSION['USER_PASSWORD'] = $result['password'];
-				$_SESSION['USER_LOGIN_IN'] = ($result['login'] == 'admin') ?666:1 ;
-
+				addUserToSession($result);
 				header("Location: /");
 				exit();
 			}
@@ -37,11 +32,7 @@ class AccountController extends Controller
 			$password = generatePassword($_POST['password']);
 			if  ($password == $result['password'])
 			{
-				$_SESSION['USER_ID'] = $result['id'];
-				$_SESSION['USER_LOGIN'] = $result['login'];
-				$_SESSION['USER_NAME'] = $result['name'];
-				$_SESSION['USER_PASSWORD'] = $result['password'];
-				$_SESSION['USER_LOGIN_IN'] = ($result['login'] == 'admin') ?666:1 ;
+				addUserToSession($result);
 				if ($result['login'] == 'admin') {
 					header("Location: /admin");
 					exit();

@@ -9,7 +9,7 @@ class Route
 
 	static function start()
 	{
-		$controllerName = 'article'; 
+		$controllerName = 'articles'; 
 		$actionName = 'index';
 		$params = array();
 		$url = strtolower(trim($_SERVER['REQUEST_URI']));
@@ -51,14 +51,10 @@ class Route
 		$controller = new $controllerName;
 
 		if (!empty($params)) $controller->set('params',$params);
-
-		if(method_exists($controller, $actionName))
-		{
+		if (method_exists($controller, $actionName))
 			$controller->$actionName();
-		}
 		else
-			Route::ErrorPage404();
-	
+			Route::ErrorPage404();	
 	}
 
 	static function ErrorPage404()

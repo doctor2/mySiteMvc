@@ -1,6 +1,6 @@
 <?php
 
-class ArticleController extends Controller
+class ArticlesController extends Controller
 {
 	private $modelComment;
 	private $path = 'article/';
@@ -29,9 +29,14 @@ class ArticleController extends Controller
 		$this->modelComment->addComment($this->params['id'],$_SESSION['USER_ID'],$_POST['created'], $_POST['comment']);
 		$record = $this->model->getRecord($this->params['id']);
 		$comments = $this->modelComment->getAllComments($this->params['id']);
-		$this->view->set('record', $record);
-		$this->view->set('comments', $comments);
-		$this->view->generate('Главная',$this->path.'article.php');
+		if (!empty($record))
+		{
+			$this->view->set('record', $record);
+			$this->view->set('comments', $comments);
+			$this->view->generate('Главная',$this->path.'article.php');
+		} else Route::ErrorPage404();
+
+		
 	}
 }
 ?>
