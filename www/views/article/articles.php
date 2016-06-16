@@ -1,14 +1,5 @@
-<div class="adminpanel"><a href="/admin">Панель администратора</a></div>
+
 <?php 
-
-	if (!empty($_SESSION['USER_LOGIN'])) {
-		echo '<label>Здравствуйте, '.$_SESSION['USER_NAME'].' </label>
-				<br><a href="/account/logout">Выход</a>';
-	}
-	else
-		echo'<a href="/account/login">Вход</a>
-			<a href="/account/register">Регистрация</a>';
-
 	foreach ($this->records as $record)
 	 	echo'
 			<div class="block">

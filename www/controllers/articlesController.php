@@ -33,7 +33,7 @@ class ArticlesController extends Controller
 		{
 			$this->view->set('record', $record);
 			$this->view->set('comments', $comments);
-			$this->view->generate('Главная',$this->path.'article.php');
+			$this->view->generate($record['title'],$this->path.'article.php');
 		} else Route::ErrorPage404();
 
 		
