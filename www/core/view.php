@@ -20,34 +20,6 @@ class View
 	{
 		include './views/template.php';
 	}
-
-	function gen()
-	{
-		include './views/template.php';
-	}
-
-
-	// public function __named($method, array $args = array())
- //  {
- //    $reflection = new ReflectionMethod($this, $method);
-
- //    $pass = array();
- //    foreach($reflection->getParameters() as $param)
- //    {
- //       @var $param ReflectionParameter 
- //      if(isset($args[$param->getName()]))
- //      {
- //        $pass[] = $args[$param->getName()];
- //      }
- //      else
- //      {
- //        $pass[] = $param->getDefaultValue();
- //      }
- //    }
-
-  //   return $reflection->invokeArgs($this, $pass);
-  // }
-	//public $template_view; // здесь можно указать общий вид по умолчанию.
 	
 	/*
 	$content_file - виды отображающие контент страниц;

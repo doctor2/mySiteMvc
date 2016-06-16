@@ -2,10 +2,15 @@
 
 class AccountModel extends Model
 {
-	function getAllUsers($link)
+	function __construct()
+	{
+		parent:: __construct();
+	}
+	
+	function getAllUsers()
 	{
 		$query = "SELECT * FROM users ORDER BY id DESC";
-		$result = mysqli_query($link,$query);
+		$result = mysqli_query($this->link,$query);
 
 		$number = mysqli_num_rows($result);
 		$records = array();
@@ -16,20 +21,20 @@ class AccountModel extends Model
 		return $records;
 	}
 
-	function addUser($link, $login, $email, $password, $name)
+	function addUser($login, $email, $password, $name)
 	{
-		$login = prepareLineToQuery($link, $login);
-		$email = prepareLineToQuery($link, $email);
-		$password = prepareLineToQuery($link, generatePassword($password));
-		$name = prepareLineToQuery($link, $name);
+		$login = prepareLineToQuery($this->link, $login);
+		$email = prepareLineToQuery($this->link, $email);
+		$password = prepareLineToQuery($this->link, generatePassword($password));
+		$name = prepareLineToQuery($this->link, $name);
 		$query = sprintf("INSERT INTO users (login, email, password, name) VALUES ('%s','%s','%s','%s')", $login, $email, $password, $name);
-		$result = mysqli_query($link, $query);
+		$result = mysqli_query($this->link, $query);
 	}
 	
-	function getUser($link, $login)
+	function getUser($login)
 	{
-		$query = sprintf("SELECT * FROM users WHERE login ='%s'",  prepareLineToQuery($link,$login));
-		return mysqli_fetch_assoc(mysqli_query($link, $query));
+		$query = sprintf("SELECT * FROM users WHERE login ='%s'",  prepareLineToQuery($this->link,$login));
+		return mysqli_fetch_assoc(mysqli_query($this->link, $query));
 	}
 }
 ?>

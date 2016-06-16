@@ -14,37 +14,15 @@ if (@$_SESSION['USER_LOGIN_IN'] != 1 and @$_COOKIE['user']) {
 	$_SESSION['USER_EMAIL'] = $result['email'];
 	$_SESSION['USER_LOGIN_IN'] = 1;
 }
+
 require_once("/database.php");
 require_once("/settings.php");
-/*
-Здесь обычно подключаются дополнительные модули, реализующие различный функционал:
-	> аутентификацию
-	> кеширование
-	> работу с формами
-	> абстракции для доступа к данным
-	> ORM
-	> Unit тестирование
-	> Benchmarking
-	> Работу с изображениями
-	> Backup
-	> и др.
-*/
-
 require_once 'core/route.php';
 Route::start(); // запускаем маршрутизатор
 
 
-
-
-
-
-
-
-
-
-
-
-function prepareLineToQuery (&$link, $line) {
+function prepareLineToQuery (&$link, $line) 
+{
 	 return mysqli_real_escape_string($link, trim($line));
 	// return nl2br(htmlspecialchars(trim($line), ENT_QUOTES), false); для вывода
 }
@@ -63,7 +41,8 @@ function paginator ($path,$number)
 		</nav>';
 }
 
-function generatePassword ($password) {
+function generatePassword ($password) 
+{
 	return md5('@!Doc25'.md5('632'.$password.'123'));
 }
 
@@ -97,5 +76,4 @@ function footer ()
 		</body>
 		</html>';
 }
-
 ?>

@@ -1,6 +1,3 @@
-<?php 
-//head("Главная");
-?>
 		<div class="adminpanel"><a href="/admin">Панель администратора</a></div>
 <?php 
 
