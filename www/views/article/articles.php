@@ -1,4 +1,4 @@
-		<div class="adminpanel"><a href="/admin">Панель администратора</a></div>
+<div class="adminpanel"><a href="/admin">Панель администратора</a></div>
 <?php 
 
 	if (!empty($_SESSION['USER_LOGIN'])) {

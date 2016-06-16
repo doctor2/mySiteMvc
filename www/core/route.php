@@ -53,7 +53,9 @@ class Route
 		if (!empty($params)) $controller->set('params',$params);
 
 		if(method_exists($controller, $actionName))
+		{
 			$controller->$actionName();
+		}
 		else
 			Route::ErrorPage404();
 	
@@ -67,5 +69,5 @@ class Route
 		footer();
 		exit();
     }
-    
 }
+?>

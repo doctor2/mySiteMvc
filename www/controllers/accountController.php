@@ -62,6 +62,7 @@ class AccountController extends Controller
 		session_unset();
 		header("Location: /");
 	}
+
 }
 
 ?>

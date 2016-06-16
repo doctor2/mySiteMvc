@@ -36,5 +36,11 @@ class AccountModel extends Model
 		$query = sprintf("SELECT * FROM users WHERE login ='%s'",  prepareLineToQuery($this->link,$login));
 		return mysqli_fetch_assoc(mysqli_query($this->link, $query));
 	}
+
+	function getUserByPassword($password)
+	{
+		$query = sprintf("SELECT * FROM users WHERE password ='%s'",  prepareLineToQuery($this->link,$password));
+		return mysqli_fetch_assoc(mysqli_query($this->link, $query));
+	}
 }
 ?>
