@@ -4,8 +4,6 @@ class AccountController extends Controller
 	private $path = "account/";
 	function __construct()
 	{
-		require_once("./database.php");
-		require_once ("./models/accountModel.php");
 		$this->model = new AccountModel();
 		$this->view = new View();
 		$this->link = connectDb();
@@ -30,9 +28,7 @@ class AccountController extends Controller
 				exit();
 			}
 		}
-		$this->view->set('title', 'Регистрация');
-		$this->view->set('content', $this->path.'register.php');
-		$this->view->generate();
+		$this->view->generate('Регистрация', $this->path.'register.php');
 	}
 
 	function login()
@@ -55,9 +51,7 @@ class AccountController extends Controller
 				exit(header("Location: /"));
 			}
 		}
-		$this->view->set('title', 'Вход');
-		$this->view->set('content', $this->path.'login.php');
-		$this->view->generate();
+		$this->view->generate('Вход', $this->path.'login.php');
 	}
 
 	function logout()

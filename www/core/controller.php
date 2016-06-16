@@ -1,5 +1,8 @@
 <?php
-
+function __autoload($className) 
+{
+	require_once ('/models/'.lcfirst($className).'.php');
+}
 class Controller {
 	
 	public $model;
@@ -7,15 +10,15 @@ class Controller {
 	public $link;
 	
 	function __construct()
-	{
-		$this->view = new View();
+	{	
+		
 	}
 	
-	// действие (action), вызываемое по умолчанию
-	function index()
-	{
-		// todo	
-	}
+	//При создании объекта класса имя передается в эту функцию
+	// function __autoload($className) 
+	// {
+	// 	require_once ('/models/'.lcfirst($className).'.php');
+	// }
 
 	private $data = array(); // Данные для вывода
 

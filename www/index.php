@@ -1,9 +1,10 @@
 <?php
 error_reporting(E_ALL);//выводит все допущенные ошибки
 // подключаем файлы ядра
-require_once 'core/model.php';
-require_once 'core/view.php';
-require_once 'core/controller.php';
+require_once '/core/model.php';
+require_once '/core/view.php';
+require_once '/core/controller.php';
+
 session_start();
 if (@$_SESSION['USER_LOGIN_IN'] != 1 and @$_COOKIE['user']) {
 	$result = mysqli_fetch_assoc(mysqli_query($link, "SELECT `id`, `name`, `email`, `login` FROM `users` WHERE `password` = '$_COOKIE[user]'"));
@@ -13,9 +14,8 @@ if (@$_SESSION['USER_LOGIN_IN'] != 1 and @$_COOKIE['user']) {
 	$_SESSION['USER_EMAIL'] = $result['email'];
 	$_SESSION['USER_LOGIN_IN'] = 1;
 }
-require_once("database.php");
-require_once("settings.php");
-$link = connectDb();
+require_once("/database.php");
+require_once("/settings.php");
 /*
 Здесь обычно подключаются дополнительные модули, реализующие различный функционал:
 	> аутентификацию

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title><?=$this->title?></title>
+	<title><?=$title?></title>
 	<link rel="stylesheet" href="/content/style.css">
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
@@ -12,7 +12,7 @@
 		<header class="header"> 
 			<h1><a href="/">Живой журнал представляет!</a></h1>				
 		</header>
-		<?php include '/views/'.$this->content; ?>
+		<?php include '/views/'.$content; ?>
 		<footer class="footer">
 			Doctor - company © 2013—2016.
 			<br> 

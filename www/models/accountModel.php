@@ -25,6 +25,7 @@ class AccountModel extends Model
 		$query = sprintf("INSERT INTO users (login, email, password, name) VALUES ('%s','%s','%s','%s')", $login, $email, $password, $name);
 		$result = mysqli_query($link, $query);
 	}
+	
 	function getUser($link, $login)
 	{
 		$query = sprintf("SELECT * FROM users WHERE login ='%s'",  prepareLineToQuery($link,$login));

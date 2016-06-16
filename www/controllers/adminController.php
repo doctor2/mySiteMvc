@@ -2,19 +2,12 @@
 class AdminController extends Controller
 {
 	private $path = 'admin/';
-	//При создании объекта класса имя передается в эту функцию
-	// function __autoload($class_name) 
-	// {
-	// 	include "$class_name.php";
-	// }
+	
 	function __construct()
 	{
 		self::checkAccess();
-		require_once("./database.php");
-		require_once ("./models/articleModel.php");
+		// require_once ("./models/articleModel.php");
 		$this->model = new ArticleModel();
-		$this->view = new View();
-		$this->link = connectDb();
 	}
 	
 	private function checkAccess()
@@ -34,11 +27,9 @@ class AdminController extends Controller
 			$records = $this->model->getLimitedRecords($this->link, $this->params['page']);
 		else
 			$records = $this->model->getLimitedRecords($this->link, 1);
-		$this->view->set('title', 'Админка');
-		$this->view->set('content', $this->path.'index.php');
 		$this->view->set('number', $this->model->getNumberOfRecords($this->link));
 		$this->view->set('records', $records);
-		$this->view->generate();
+		$this->view->generate('Админка',$this->path.'index.php');
 	}
 
 	function editArticle()
@@ -49,10 +40,8 @@ class AdminController extends Controller
 			exit();
 		}
 		$record = $this->model->getRecord($this->link, $this->params['id']);
-		$this->view->set('title', 'Редактирование');
-		$this->view->set('content', $this->path.'articleEdit.php');
 		$this->view->set('record', $record);
-		$this->view->generate();
+		$this->view->generate('Редактирование', $this->path.'articleEdit.php'));
 
 	}
 
@@ -63,9 +52,7 @@ class AdminController extends Controller
 			header("Location: /admin");
 			exit();
 		}
-		$this->view->set('title', 'Добавить запись');
-		$this->view->set('content', $this->path.'articleCreate.php');
-		$this->view->generate();
+		$this->view->generate('Добавить запись', $this->path.'articleCreate.php');
 	}
 
 	function deleteArticle()
