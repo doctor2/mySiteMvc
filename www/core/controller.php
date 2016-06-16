@@ -7,11 +7,10 @@ class Controller {
 	
 	public $model;
 	public $view;
-	public $link;
 	
 	function __construct()
 	{	
-		
+		$this->view = new View();
 	}
 	
 	//При создании объекта класса имя передается в эту функцию

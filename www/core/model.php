@@ -2,6 +2,10 @@
 
 class Model
 {
+	function __construct()
+	{
+		$this->link = connectDb();
+	}
 	public $link;
 	/*
 		Модель обычно включает методы выборки данных, это могут быть:

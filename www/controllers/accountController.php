@@ -5,19 +5,18 @@ class AccountController extends Controller
 	function __construct()
 	{
 		$this->model = new AccountModel();
-		$this->view = new View();
-		$this->link = connectDb();
+		parent::__construct();
 	}
 
 	function register()
 	{
 		if (@$_POST['enter']) 
 		{
-			$result = $this->model->getUser($this->link, $_POST['login']);
+			$result = $this->model->getUser($_POST['login']);
 			if (empty($result)) //может быть касяк!!!!!!!!!!!!!!!!!
 			{
-				$this->model->addUser($this->link, $_POST['login'], $_POST['email'], $_POST['password'], $_POST['name']);
-				$result = getUser($this->link, $_POST['login']);
+				$this->model->addUser($_POST['login'], $_POST['email'], $_POST['password'], $_POST['name']);
+				$result = getUser($_POST['login']);
 				$_SESSION['USER_ID'] = $result['id'];
 				$_SESSION['USER_LOGIN'] = $result['login'];
 				$_SESSION['USER_NAME'] = $result['name'];
@@ -34,7 +33,7 @@ class AccountController extends Controller
 	function login()
 	{
 		if (@$_POST['enter'] ) {
-			$result = $this->model->getUser($this->link, $_POST['login']);
+			$result = $this->model->getUser($_POST['login']);
 			$password = generatePassword($_POST['password']);
 			if  ($password == $result['password'])
 			{
