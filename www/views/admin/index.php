@@ -22,6 +22,6 @@
 		}
 		?>
 	</table>
-	<?=paginator("/admin/page/",$this->number);?>
+	<?=paginator("/admin/page/",$this->number, $this->pageNumber);?>
 	<a href="/admin/createArticle">Добавить запись</a>
 </div>

@@ -22,15 +22,15 @@ function generatePassword ($password)
 	return md5('@!Doc25'.md5('632'.$password.'123'));
 }
 
-function paginator ($path,$number)
+function paginator ($path,$number, $pageNumber)
 {
 	$numberOfPage = ceil($number/NUMBER_OF_ARTICLE);
 	echo '
 		<nav>
-	  		<ul class="pagination">';
+	  		<ul class="paginator">';
     for ($i=1; $i <= $numberOfPage; $i++) { 
-    	echo '
-    	<li><a  href="'.$path.$i.'">'.$i.'</a></li>';
+    	$class = ($i==$pageNumber)?'active':'';
+    	echo '<li><a class="'.$class.'" href="'.$path.$i.'">'.$i.'</a></li>';
     }
     echo '  </ul>
 		</nav>';

@@ -84,8 +84,7 @@ body{
 
 .main-menu .sub-menu a {
     margin-bottom: -1px;
-    border: 1px solid #E5E5E5;
-    
+    border: 1px solid #E5E5E5; 
 }
 
 .main-menu > li:hover .sub-menu {
@@ -93,12 +92,35 @@ body{
     z-index: 10;
 }
 /*menu -------------------------End------------------------------------------------------*/
-
-
-.pagination li a{
-	color:black !important;
-	background-color: rgba(255,228,196,0.8) !important;
+.paginator{
+	margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: right;
+    margin-right: 50px;
 }
+
+.paginator > li{
+    display: inline-block;
+}
+
+.paginator li a{
+	 display: block;
+    margin-left: -1px;
+    padding: 8px 10px;
+	color:black ;
+	background-color: rgba(255,228,196,0.8);
+	border: 1px solid #E5E5E5;
+	border-radius: 10px;
+}
+
+.paginator li a:hover{
+	background: #f5f5f5;
+}
+.paginator .active{
+	background: #f5f5f5;
+}
+
 footer{
 	text-align: right;
 	margin-top: 10px;

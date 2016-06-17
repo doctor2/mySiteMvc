@@ -10,5 +10,5 @@
 					'.nl2br(substr($record['content'],0,strripos(substr($record['content'],0,600),' ')),false).'...'.'
 				</div>
 			</div>';
-	paginator("/articles/page/",$this->number);
+	paginator("/articles/page/",$this->number,$this->pageNumber);
  ?>

@@ -14,11 +14,16 @@ class ArticlesController extends Controller
 
 	function index()
 	{
-		if (!empty($this->params['page']))
+		if (!empty($this->params['page'])){
 			$records = $this->model->getLimitedRecords($this->params['page']);
-		else
+			$this->view->set('pageNumber', $this->params['page']);
+		}
+		else{
 			$records = $this->model->getLimitedRecords(1);
+			$this->view->set('pageNumber', 1);
+		}
 		$this->view->set('number', $this->model->getNumberOfRecords());
+		$this->view->set('activePage', $records);
 		$this->view->set('records', $records);
 		$this->view->generate('Главная',$this->path.'articles.php');
 	}
