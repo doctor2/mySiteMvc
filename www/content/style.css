@@ -155,6 +155,10 @@ footer{
 .content{
 	margin-top: -10px;
 }
+.commentEdit{
+	float: right;
+	margin-top: -15px;
+}
 
 /*----------------------------------------------------------*/
 
