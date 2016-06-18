@@ -23,20 +23,27 @@ class ArticleModel extends Model
 		return $records;
 	}
 
+
+
 	function getLimitedRecords($part)
 	{
 		$part = prepareLineToQuery($this->link,((int)$part-1)*NUMBER_OF_ARTICLE);
 		$query = sprintf("SELECT * FROM articles ORDER BY id DESC LIMIT %d,%d", $part,NUMBER_OF_ARTICLE);
 		$result = mysqli_query($this->link,$query);
-
-		if (!$result) die (mysqli_error($this->link));
-
-		$number = mysqli_num_rows($result);
 		$records = array();
+		while ($row = mysqli_fetch_assoc($result))
+			$records[] = $row;
+		return $records;
+	}
 
-		for ($i=0; $i < $number; $i++) { 
-			$records[] = mysqli_fetch_assoc($result);
-		}
+	function searchRecords($content)
+	{
+		$content = prepareLineToQuery($this->link, $content);
+		$query = "SELECT * FROM articles WHERE content LIKE '%$content%' ORDER BY id DESC";
+		$result = mysqli_query($this->link,$query);
+		$records = array();
+		while ($row = mysqli_fetch_assoc($result))
+			$records[] = $row;
 		return $records;
 	}
 

@@ -27,25 +27,25 @@ class Route
 			//$actionName = $match[2];
 			$params['page'] =$match[2];
 		}
-		else if (preg_match("/^\/(\w+)\/(id)\/(\d+)\/?$/", $url, $match))
-		{
-			$controllerName = $match[1];
-			$actionName = $match[2];
-			$params['id'] =$match[3];
-		}
 		else if (preg_match("/^\/(\w+)\/(\w+)\/id\/(\d+)\/?$/", $url, $match))
 		{
 			$controllerName = $match[1];
 			$actionName = $match[2];
 			$params['id'] =$match[3];
 		}
-		else Route::ErrorPage404();
+		else if (preg_match("/^\/(\w+)\/(\w+)\/page\/(\d+)\/?$/", $url, $match))
+		{
+			$controllerName = $match[1];
+			$actionName = $match[2];
+			$params['page'] =$match[3];
+		}
+		else Route::errorPage404();
 
 
 		$controllerName = $controllerName.'Controller';
 		$controllerPath = "./controllers/".$controllerName.'.php';
 		if(file_exists($controllerPath)) include $controllerPath;
-		else Route::ErrorPage404();
+		else Route::errorPage404();
 		
 		$controllerName = ucfirst($controllerName);
 		$controller = new $controllerName;
@@ -54,10 +54,10 @@ class Route
 		if (method_exists($controller, $actionName))
 			$controller->$actionName();
 		else
-			Route::ErrorPage404();	
+			Route::errorPage404();	
 	}
 
-	static function ErrorPage404()
+	static function errorPage404()
 	{
 		head('ошибка');
 		echo '<h1><label>HTTP/1.1 404 Not Found</label></h1>

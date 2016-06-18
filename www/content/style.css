@@ -35,6 +35,24 @@ body{
 	background-color: rgba(4, 72, 97, 0.6);
 	margin-bottom: -10px;
 }
+.search{
+	vertical-align: middle;
+	float: right;
+	display: block;
+	padding-right: 5%;
+}
+.search form{
+	padding: 0;
+	margin: 0;
+}
+.search input{
+	padding:5px;
+	border-radius: 5px;
+}
+.search_text, .search_button{
+	float: left;
+	display: block;
+}
 .main-menu, .userPanel ul {
     margin: 0;
     padding: 0;

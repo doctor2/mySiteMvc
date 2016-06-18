@@ -12,8 +12,6 @@
 		<header class="header"> 
 			<h1><a href="/">Живой журнал представляет!</a></h1>			
 		</header>
-		
-		
 		<nav class="topMenu">
 			<div class="userPanel">	
 				<ul>
@@ -29,6 +27,16 @@
 
 				</ul>
 			</div>
+			<div class="search">
+				<form method="POST" action="/search/articles">
+                            <div class="search_text">
+                                <input name="text" placeholder="Поиск..." required="" type="search" value="<?=@$_SESSION['SEARCH']?>">
+                            </div>
+                            <div class="search_button">
+                                <input type="submit" name="search" value="Искать!">
+                            </div>
+                        </div>
+				</form>
 			<div>
 				<ul class="main-menu ">
 					<li> <a href="/">Главная</a></li>
