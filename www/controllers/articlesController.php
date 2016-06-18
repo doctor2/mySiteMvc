@@ -3,6 +3,7 @@
 class ArticlesController extends Controller
 {
 	private $modelComment;
+	private $modelRate;
 	private $path = 'article/';
 
 	function __construct()
@@ -10,6 +11,7 @@ class ArticlesController extends Controller
 		parent::__construct();
 		$this->model = new ArticleModel();
 		$this->modelComment = new CommentModel();
+		$this->modelRate = new RateModel();
 	}
 
 	function index()
@@ -23,6 +25,7 @@ class ArticlesController extends Controller
 			$records = $this->model->getLimitedRecords(1);
 			$this->view->set('pageNumber', 1);
 		}
+		$this->view->set('numberOfLike', $this->modelRate->numberOfLike());
 		$this->view->set('number', $this->model->getNumberOfRecords());
 		$this->view->set('records', $records);
 		$this->view->set('path', "/articles/page/");

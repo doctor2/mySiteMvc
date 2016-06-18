@@ -58,11 +58,7 @@ class ArticleModel extends Model
 	{
 		$query = sprintf("SELECT * FROM articles WHERE id=%d",(int) $id);
 		$result = mysqli_query($this->link, $query);
-
-		if (!$result) die (mysqli_error($this->link));
-
 		$record = mysqli_fetch_assoc($result);
-
 		return $record;
 	}
 
@@ -76,8 +72,6 @@ class ArticleModel extends Model
 			$content = prepareLineToQuery($this->link, $content);
 			$query = sprintf("INSERT INTO articles (title, date, content) VALUES ('%s','%s', '%s')", $title, $date, $content);
 			$result = mysqli_query($this->link, $query);
-
-			if (!$result) die (mysqli_error($this->link));
 		}
 	}
 
@@ -92,8 +86,6 @@ class ArticleModel extends Model
 			$query = sprintf("UPDATE articles SET title='%s', date='%s', 
 				content='%s' WHERE id=%d ", $title, $date, $content, (int) $id);
 			$result = mysqli_query($this->link, $query);
-
-			if (!$result) die (mysqli_error($this->link));
 		}
 	}
 
@@ -101,7 +93,6 @@ class ArticleModel extends Model
 	{
 		$query = sprintf("DELETE FROM articles WHERE id = %d ", (int) $id);
 		$result = mysqli_query($this->link, $query);
-		if (!$result) die (mysqli_error($this->link));
 	}
 }
 ?>

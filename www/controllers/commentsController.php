@@ -12,7 +12,6 @@ class CommentsController extends Controller
 	{
 		if (!empty($_POST['save']))
 			$this->model->editComment( $_POST['commentId'], $_SESSION['USER_ID'], $_POST['created'], $_POST['comment']);
-		if (!empty($_POST['cansel'])) ;
 		unset($_SESSION['COMMENTS_EDIT']);
 		exit(header('location: '.$_SERVER['HTTP_REFERER']));
 	}

@@ -11,13 +11,9 @@ class AccountModel extends Model
 	{
 		$query = "SELECT * FROM users ORDER BY id DESC";
 		$result = mysqli_query($this->link,$query);
-
-		$number = mysqli_num_rows($result);
 		$records = array();
-
-		for ($i=0; $i < $number; $i++) { 
-			$records[] = mysqli_fetch_assoc($result);
-		}
+		while($row = mysqli_fetch_assoc($result))
+			$records[] = $row;
 		return $records;
 	}
 

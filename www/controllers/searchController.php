@@ -29,7 +29,7 @@ class SearchController extends Controller
 		else Route::errorPage404();
 		$this->view->set('number', count($records));
 		$this->view->set('path', "/search/articles/page/");
-		$this->view->generate('Главная',$this->path.'articles.php');
+		$this->view->generate('Страница поиск',$this->path.'articles.php');
 	}
 }
 ?>

@@ -10,11 +10,9 @@ class CommentModel extends Model
 	{
 		$query = sprintf("SELECT users.name, users.id AS userId, comments.comment, comments.created, comments.id FROM comments, users  WHERE comments.user_id = users.id AND art_id=%d ORDER BY comments.id DESC",(int) $id);
 		$result = mysqli_query($this->link,$query);
-		$number = mysqli_num_rows($result);
 		$comments = array();
-		for ($i=0; $i < $number; $i++) { 
-			$comments[] = mysqli_fetch_assoc($result);
-		}
+		while($row = mysqli_fetch_assoc($result))
+			$comments[] = $row;
 		return $comments;
 		
 	}
@@ -28,7 +26,6 @@ class CommentModel extends Model
 			$comment = prepareLineToQuery($this->link, $comment);
 			$query = sprintf("INSERT INTO comments ( created, comment, user_id, art_id) 
 				VALUES ('%s', '%s', '%d', '%d')", $created, $comment,(int) $userId, (int) $id);
-
 			$result = mysqli_query($this->link,$query);
 		}	
 	}

@@ -68,23 +68,5 @@ class AdminController extends Controller
 		}
 		
 	}
-
-	
-	
-
-
-	// if ($module == "editArticle" and $this->params['id']) {
-	// 	$record = getRecord($$this->params['id']);
-	// 	include("views/admin/articleEdit.php");
-	// }
-	// else if ($module == "createArticle" ) include("views/admin/articleCreate.php");
-	// else 
-	// {
-	// 	if (!empty($this->params) && @$this->params['page'])
-	// 		$records = getLimitedRecords($$this->params['page']);
-	// 	else
-	// 		$records = getLimitedRecords($1);
-	// 	include("views/admin/admin.php");
-	// }
 }
 ?>

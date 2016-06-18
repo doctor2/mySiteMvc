@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Июн 13 2016 г., 14:49
+-- Время создания: Июн 18 2016 г., 21:00
 -- Версия сервера: 5.5.25
 -- Версия PHP: 5.5.9
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `articles` (
   `content` text NOT NULL,
   `date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Дамп данных таблицы `articles`
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `art_id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 --
 -- Дамп данных таблицы `comments`
@@ -72,7 +72,35 @@ INSERT INTO `comments` (`id`, `created`, `comment`, `art_id`, `user_id`) VALUES
 (3, '2016-06-07 00:00:00', ' Все гуд!!', 2, 1),
 (4, '2016-06-08 00:00:00', 'ОООоо', 3, 3),
 (5, '2016-06-12 21:21:22', 'Интересно!', 1, 4),
-(6, '2016-06-12 21:27:27', 'Ссылка взята с википедии!', 5, 3);
+(6, '2016-06-17 15:44:21', 'Ссылка взята с википедии!', 5, 3),
+(8, '2016-06-15 22:16:30', 'Вышел заяц!', 7, 3),
+(9, '2016-06-17 16:58:34', 'Привет!', 7, 1),
+(16, '2016-06-18 13:25:01', 'Интересно!', 6, 2),
+(13, '2016-06-17 15:35:44', 'Доброе утро всем', 7, 3),
+(14, '2016-06-17 15:36:20', 'Ещё', 6, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `rates`
+--
+
+CREATE TABLE IF NOT EXISTS `rates` (
+  `art_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `rates`
+--
+
+INSERT INTO `rates` (`art_id`, `user_id`) VALUES
+(3, 1),
+(3, 3),
+(6, 2),
+(4, 2),
+(7, 2),
+(12, 1);
 
 -- --------------------------------------------------------
 
