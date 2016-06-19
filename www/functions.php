@@ -14,7 +14,25 @@ function addUserToSession(array $result)
 		$_SESSION['USER_NAME'] = $result['name'];
 		$_SESSION['USER_PASSWORD'] = $result['password'];
 		$_SESSION['USER_LOGIN_IN'] = ($result['login'] == 'admin') ?666:1 ;
+		$_SESSION['USER_FOLDER'] = $result['folderNumber'];
 	}	
+}
+
+function minimazeImage($imageDir, $savingDir, $newWidth, $newHeight, $quality = 50) {
+/*
+$imageDir - Путь к изображению, которое нужно уменьшить.
+$savingDir - Директория, куда будет сохранена уменьшенная копия.
+$newWidth - Ширина уменьшенной копии.
+$newHeight - Высота уменьшенной копии.
+$quality - Качество уменьшенной копии.
+*/
+$Scr = imagecreatefromjpeg($imageDir);
+$Size = getimagesize($imageDir);
+$Tmp = imagecreatetruecolor($newWidth, $newHeight);
+imagecopyresampled($Tmp, $Scr, 0, 0, 0, 0, $newWidth, $newHeight, $Size[0], $Size[1]);
+imagejpeg($Tmp, $savingDir, $quality);
+imagedestroy($Scr);
+imagedestroy($Tmp);
 }
 
 function generatePassword ($password) 

@@ -104,7 +104,12 @@ body{
     margin-bottom: -1px;
     border: 1px solid #E5E5E5; 
 }
+.userPanel label a {
+	padding: 0;
+	display: inline;
+	border:none;
 
+}
 .main-menu > li:hover .sub-menu {
     display:block;
     z-index: 10;
@@ -246,4 +251,8 @@ input[type="submit"],input[type="reset"]{
 	font-size:1.1em;
 	font-style: italic;
 	color: black;
+}
+/*----------profile----------------------------*/
+.profilePage{
+	margin-top: 20px;
 }

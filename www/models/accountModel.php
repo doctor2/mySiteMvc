@@ -38,5 +38,10 @@ class AccountModel extends Model
 		$query = sprintf("SELECT * FROM users WHERE password ='%s'",  prepareLineToQuery($this->link,$password));
 		return mysqli_fetch_assoc(mysqli_query($this->link, $query));
 	}
+
+	function addFolder($folderNumber, $userId)
+	{
+		mysqli_query($this->link, sprintf("UPDATE `users`  SET `folderNumber` = %d WHERE `id` = %d",(int) $folderNumber,(int) $userId));
+	}
 }
 ?>
