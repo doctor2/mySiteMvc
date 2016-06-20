@@ -33,15 +33,21 @@ class AccountModel extends Model
 		return mysqli_fetch_assoc(mysqli_query($this->link, $query));
 	}
 
+	function getUserById($id)
+	{
+		$query = sprintf("SELECT * FROM users WHERE id =%d",  prepareLineToQuery($this->link,(int) $id));
+		return mysqli_fetch_assoc(mysqli_query($this->link, $query));
+	}
+
 	function getUserByPassword($password)
 	{
 		$query = sprintf("SELECT * FROM users WHERE password ='%s'",  prepareLineToQuery($this->link,$password));
 		return mysqli_fetch_assoc(mysqli_query($this->link, $query));
 	}
 
-	function addFolder($folderNumber, $userId)
+	function addFolder($folder, $userId)
 	{
-		mysqli_query($this->link, sprintf("UPDATE `users`  SET `folderNumber` = %d WHERE `id` = %d",(int) $folderNumber,(int) $userId));
+		mysqli_query($this->link, sprintf("UPDATE `users`  SET `folder` = %d WHERE `id` = %d",(int) $folder,(int) $userId));
 	}
 }
 ?>

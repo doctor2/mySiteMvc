@@ -13,4 +13,5 @@
 		<label ><?=@$_SESSION['FILE_ERROR']?></label>
 		<input type="submit" name="enter">
 	</form>
+	<a href="/users/all">Другие пользователи</a>
 </div>

@@ -17,7 +17,7 @@
 				<ul>
 					<?php
 						if (!empty($_SESSION['USER_LOGIN']) ) {
-							echo '<li><label>Здравствуйте, <a href="/profile/">'.$_SESSION['USER_NAME'].'</a> </label></li>
+							echo '<li><label>Здравствуйте, <a href="/users/profile/">'.$_SESSION['USER_NAME'].'</a> </label></li>
 									<li><a href="/account/logout">Выход</a></li>';
 						}
 						else

@@ -1,8 +1,8 @@
 <?php
 
-class ProfileController extends Controller
+class UsersController extends Controller
 {
-	private $path = 'profile/';
+	private $path = 'user/';
 
 	function __construct()
 	{
@@ -10,7 +10,7 @@ class ProfileController extends Controller
 		$this->model = new AccountModel();
 	}
 
-	function index()
+	function profile()
 	{
 		unset($_SESSION['FILE_ERROR']);
 		if (@$_FILES['file']['tmp_name']) 
@@ -44,6 +44,21 @@ class ProfileController extends Controller
 		$this->view->generate('Профиль',$this->path.'index.php');
 	}
 
+	function all()
+	{
+		$this->view->set('users', $this->model->getAllUsers());
+		$this->view->generate('Пользователи',$this->path.'all.php');
+	}
+
+	function user()
+	{
+		if (!empty($this->params['id'])){
+			$user = $this->model->getUserById($this->params['id']);
+			$this->view->set('user', $user);
+			if ($user['id'] == $_SESSION['USER_ID']) exit(header('Location: /users/profile/'));
+			$this->view->generate($user['name'], $this->path.'user.php');
+		}
+	}
 
 }
 ?>
