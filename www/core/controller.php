@@ -14,7 +14,7 @@ class Controller {
 	private function checkAuthoriz()
     {
     	session_start();
-		if (@$_SESSION['USER_LOGIN_IN'] != 1 && !empty($_COOKIE['user'])) {
+		if (empty($_SESSION['USER_LOGIN'])  && !empty($_COOKIE['user'])) {
 			$model = new AccountModel();
 			$result = $model->getUserByPassword($_COOKIE['user']);
 			addUserToSession($result);

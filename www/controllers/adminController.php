@@ -12,7 +12,7 @@ class AdminController extends Controller
 	
 	private function checkAccess()
 	{
-		if (empty($_SESSION['USER_LOGIN_IN']) or $_SESSION['USER_LOGIN_IN']!=666){
+		if (@$_SESSION['USER_ROLE']!=3){
 			head('Ошибка');
 			echo '<h1><label>У вас недостаточно прав!!!</label></h1>
 				<a href="/">Вернуться на главную</a>';

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Июн 20 2016 г., 06:52
+-- Время создания: Июн 20 2016 г., 07:53
 -- Версия сервера: 5.5.25
 -- Версия PHP: 5.5.9
 
@@ -105,6 +105,28 @@ INSERT INTO `rates` (`art_id`, `user_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `roles`
+--
+
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` smallint(6) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `roles`
+--
+
+INSERT INTO `roles` (`id`, `type`) VALUES
+(-1, 'Бан'),
+(1, 'Пользователь'),
+(2, 'Модератор'),
+(3, 'Администратор');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `users`
 --
 
@@ -114,7 +136,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `login` varchar(40) NOT NULL,
   `password` varchar(32) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `folder` int(10) unsigned NOT NULL,
+  `folder` int(10) unsigned NOT NULL DEFAULT '0',
+  `role_id` smallint(6) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
@@ -123,12 +146,12 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `login`, `password`, `email`, `folder`) VALUES
-(1, 'Иван', 'admin', 'c7ba44696e1d9cfd8df208954c2f58f3', 'doctor254452009@ya.ru', 1),
-(2, 'Михаил', 'doctor254', 'be7027f83aef27e080b209ad9f02965e', 'ssv@sdc.r', 0),
-(3, 'Петр', 'user1', 'be7027f83aef27e080b209ad9f02965e', 'blabla@bla.la', 1),
-(4, 'Юзер', 'user2', 'be7027f83aef27e080b209ad9f02965e', 'blabla@bla.la', 0),
-(5, 'Единичка', 'doctor2544', 'db85eba6dcbbcdec9b6b58cc7972d356', 'blabla@bla.la', 0);
+INSERT INTO `users` (`id`, `name`, `login`, `password`, `email`, `folder`, `role_id`) VALUES
+(1, 'Иван', 'admin', 'c7ba44696e1d9cfd8df208954c2f58f3', 'doctor254452009@ya.ru', 1, 3),
+(2, 'Михаил', 'doctor254', 'be7027f83aef27e080b209ad9f02965e', 'ssv@sdc.r', 0, 1),
+(3, 'Петр', 'user1', 'be7027f83aef27e080b209ad9f02965e', 'blabla@bla.la', 1, 1),
+(4, 'Юзер', 'user2', 'be7027f83aef27e080b209ad9f02965e', 'blabla@bla.la', 0, 1),
+(5, 'Единичка', 'doctor2544', 'db85eba6dcbbcdec9b6b58cc7972d356', 'blabla@bla.la', 0, 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

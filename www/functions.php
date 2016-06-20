@@ -14,7 +14,7 @@ function addUserToSession(array $result)
 		$_SESSION['USER_LOGIN'] = $result['login'];
 		$_SESSION['USER_NAME'] = $result['name'];
 		$_SESSION['USER_PASSWORD'] = $result['password'];
-		$_SESSION['USER_LOGIN_IN'] = ($result['login'] == 'admin') ?666:1 ;
+		$_SESSION['USER_ROLE'] = $result['role_id'];
 		$_SESSION['USER_FOLDER'] = $result['folder'];
 	}	
 }
