@@ -1,3 +1,3 @@
 <?php
-	define("NUMBER_OF_ARTICLE",3);
+	define("NUMBER_OF_ARTICLES",3);
 ?>

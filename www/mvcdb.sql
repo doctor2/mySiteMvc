@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Июн 20 2016 г., 07:53
+-- Время создания: Июн 22 2016 г., 16:45
 -- Версия сервера: 5.5.25
 -- Версия PHP: 5.5.9
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `articles` (
   `content` text NOT NULL,
   `date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
 -- Дамп данных таблицы `articles`
@@ -55,18 +55,18 @@ INSERT INTO `articles` (`id`, `title`, `content`, `date`) VALUES
 
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
-  `created` datetime NOT NULL,
+  `date` datetime NOT NULL,
   `comment` varchar(256) NOT NULL,
   `art_id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
 
 --
 -- Дамп данных таблицы `comments`
 --
 
-INSERT INTO `comments` (`id`, `created`, `comment`, `art_id`, `user_id`) VALUES
+INSERT INTO `comments` (`id`, `date`, `comment`, `art_id`, `user_id`) VALUES
 (1, '2016-06-06 00:00:00', 'Круто!', 3, 1),
 (2, '2016-06-07 00:00:00', 'Статья супер!!! ', 3, 3),
 (3, '2016-06-07 00:00:00', ' Все гуд!!', 2, 1),
@@ -100,7 +100,9 @@ INSERT INTO `rates` (`art_id`, `user_id`) VALUES
 (6, 2),
 (4, 2),
 (7, 2),
-(12, 1);
+(12, 1),
+(6, 1),
+(5, 2);
 
 -- --------------------------------------------------------
 
@@ -150,7 +152,7 @@ INSERT INTO `users` (`id`, `name`, `login`, `password`, `email`, `folder`, `role
 (1, 'Иван', 'admin', 'c7ba44696e1d9cfd8df208954c2f58f3', 'doctor254452009@ya.ru', 1, 3),
 (2, 'Михаил', 'doctor254', 'be7027f83aef27e080b209ad9f02965e', 'ssv@sdc.r', 0, 1),
 (3, 'Петр', 'user1', 'be7027f83aef27e080b209ad9f02965e', 'blabla@bla.la', 1, 1),
-(4, 'Юзер', 'user2', 'be7027f83aef27e080b209ad9f02965e', 'blabla@bla.la', 0, 1),
+(4, 'Юзер', 'user2', 'be7027f83aef27e080b209ad9f02965e', 'blabla@bla.la', 1, 1),
 (5, 'Единичка', 'doctor2544', 'db85eba6dcbbcdec9b6b58cc7972d356', 'blabla@bla.la', 0, 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

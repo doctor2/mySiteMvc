@@ -11,14 +11,9 @@ class RateModel extends Model
 		$query = sprintf("SELECT COUNT(*) AS num FROM rates WHERE  user_id = %d AND art_id = %d",(int) $userId, (int) $id);
 		$result = mysqli_query($this->link,$query);
 		$number = mysqli_fetch_assoc($result);
-		if ($number['num']==0) {
-			$query = sprintf("INSERT INTO rates ( user_id, art_id) VALUES ('%d', '%d')",(int) $userId, (int) $id);
-			$result = mysqli_query($this->link,$query);
-		}
-		else{
-			$query = sprintf("DELETE FROM rates WHERE  user_id = %d AND art_id = %d",(int) $userId, (int) $id);
-			$result = mysqli_query($this->link,$query);
-		}
+		if ($number['num']==0)  $query = sprintf("INSERT INTO rates ( user_id, art_id) VALUES ('%d', '%d')",(int) $userId, (int) $id);
+		else $query = sprintf("DELETE FROM rates WHERE  user_id = %d AND art_id = %d",(int) $userId, (int) $id);
+		$result = mysqli_query($this->link, $query);
 		
 	}
 

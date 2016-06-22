@@ -18,14 +18,14 @@
 			<div class="comment">
 				<div class="headcomment">
 					<div class="author">'.$comment['name'].'</div> 
-					<div class="date">'.$comment['created'].'</div>
+					<div class="date">'.$comment['date'].'</div>
 				</div>
 				<hr>';
 		if (!empty($_SESSION['COMMENTS_EDIT']) && $_SESSION['COMMENTS_EDIT']==$comment['id']) {
 			echo '<form  method="post" action="/comments" autocomplete="on">
 				<textarea name="comment" cols="55" rows="3" id=" comment">'.$comment['comment'].'</textarea>
 				<input type="hidden" name = "commentId" value ="'.$comment['id'].'"/>
-				<input type="hidden" name = "created" id = "created" value ="'. date("Y-m-d H:i:s").'"/>
+				<input type="hidden" name = "date" id = "date" value ="'. date("Y-m-d H:i:s").'"/>
 				<input type="submit" name="save" id="submit" value="Сохранить" />
 				<input type="submit" name="cancel" value="Отменить">
 				</form>
@@ -43,7 +43,7 @@
 				<label for="author"> Добавить новый комментарий:  </label>
 				<br>
 				<textarea name="comment" cols="55" rows="3" id=" comment"> </textarea>		
-				<input type="hidden" name = "created" id = "created" value ="'. date("Y-m-d H:i:s").'"/>
+				<input type="hidden" name = "date" id = "date" value ="'. date("Y-m-d H:i:s").'"/>
 				<br>
 				<input type="submit" name="enter" id="submit" value="Добавить" />
 				<input type="reset" value="Очистить">

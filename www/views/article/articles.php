@@ -14,5 +14,5 @@
 				</div>
 			</div>';
 	}
-	paginator($this->path,$this->number,$this->pageNumber);
+	paginator($this->path,$this->numberOfRecords,$this->pageNumber);
  ?>

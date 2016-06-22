@@ -11,24 +11,18 @@ class ArticleModel extends Model
 	{
 		$query = "SELECT * FROM articles ORDER BY id DESC";
 		$result = mysqli_query($this->link,$query);
-
-		if (!$result) die (mysqli_error($this->link));
-
-		$number = mysqli_num_rows($result);
 		$records = array();
-
-		for ($i=0; $i < $number; $i++) { 
-			$records[] = mysqli_fetch_assoc($result);
-		}
+		while($row = mysqli_fetch_assoc($result))
+			$records[] = $row;
 		return $records;
 	}
 
 
 
-	function getLimitedRecords($part)
+	function getLimitedRecords($pageNumber)
 	{
-		$part = prepareLineToQuery($this->link,((int)$part-1)*NUMBER_OF_ARTICLE);
-		$query = sprintf("SELECT * FROM articles ORDER BY id DESC LIMIT %d,%d", $part,NUMBER_OF_ARTICLE);
+		$startPosition = prepareLineToQuery($this->link,((int)$pageNumber-1)*NUMBER_OF_ARTICLES);
+		$query = sprintf("SELECT * FROM articles ORDER BY id DESC LIMIT %d, %d", $startPosition, NUMBER_OF_ARTICLES);
 		$result = mysqli_query($this->link,$query);
 		$records = array();
 		while ($row = mysqli_fetch_assoc($result))

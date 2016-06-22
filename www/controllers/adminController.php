@@ -12,17 +12,11 @@ class AdminController extends Controller
 	
 	private function checkAccess()
 	{
-		if (@$_SESSION['USER_ROLE']!=3){
-			head('Ошибка');
-			echo '<h1><label>У вас недостаточно прав!!!</label></h1>
-				<a href="/">Вернуться на главную</a>';
-			footer();
-			exit();
-		}
+		if (@$_SESSION['USER_ROLE']!=3) Route:: messagePage('Ошибка', 'У вас недостаточно прав!!!');
 	}
+
 	function index()
 	{
-		
 		if (!empty($this->params['page'])){
 			$records = $this->model->getLimitedRecords($this->params['page']);
 			$this->view->set('pageNumber', $this->params['page']);
@@ -40,10 +34,10 @@ class AdminController extends Controller
 	{
 		if (@$_POST['enter']) {
 			$this->model->editRecord($this->params['id'] ,$_POST['title'], $_POST['date'], $_POST['content']);
-			header("Location: /admin");
-			exit();
+			exit(header("Location: /admin"));
 		}
 		$record = $this->model->getRecord($this->params['id']);
+		if (empty($record)) Route::errorPage404();
 		$this->view->set('record', $record);
 		$this->view->generate('Редактирование', $this->path.'articleEdit.php');
 

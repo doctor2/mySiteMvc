@@ -15,10 +15,4 @@ class Model
 			> методы для работы с NoSQL;
 			> и др.
 	*/
-
-	// метод выборки данных
-	public function getData()
-	{
-		// todo
-	}
 }

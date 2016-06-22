@@ -24,7 +24,6 @@ class Route
 		else if (preg_match("/^\/(\w+)\/page\/(\d+)\/?$/", $url, $match))
 		{
 			$controllerName = $match[1];
-			//$actionName = $match[2];
 			$params['page'] =$match[2];
 		}
 		else if (preg_match("/^\/(\w+)\/(\w+)\/id\/(\d+)\/?$/", $url, $match))
@@ -56,6 +55,15 @@ class Route
 		else
 			Route::errorPage404();	
 	}
+
+	static function messagePage($title, $message)
+	{
+		head($title);
+		echo '<h1><label>'.$message.'</label></h1>
+			<a href="/">Вернуться на главную</a>';
+		footer();
+		exit();
+    }
 
 	static function errorPage404()
 	{

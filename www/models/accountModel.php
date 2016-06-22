@@ -27,21 +27,21 @@ class AccountModel extends Model
 		$result = mysqli_query($this->link, $query);
 	}
 	
-	function getUser($login)
+	function getUserByLogin($login)
 	{
-		$query = sprintf("SELECT * FROM users WHERE login ='%s'",  prepareLineToQuery($this->link,$login));
+		$query = sprintf("SELECT  id, login, name, email, password, folder, role_id AS role FROM users WHERE login ='%s'",  prepareLineToQuery($this->link,$login));
 		return mysqli_fetch_assoc(mysqli_query($this->link, $query));
 	}
 
 	function getUserById($id)
 	{
-		$query = sprintf("SELECT * FROM users WHERE id =%d",  prepareLineToQuery($this->link,(int) $id));
+		$query = sprintf("SELECT  id, login, name, email, password, folder, role_id AS role FROM users WHERE id =%d",  prepareLineToQuery($this->link,(int) $id));
 		return mysqli_fetch_assoc(mysqli_query($this->link, $query));
 	}
 
 	function getUserByPassword($password)
 	{
-		$query = sprintf("SELECT * FROM users WHERE password ='%s'",  prepareLineToQuery($this->link,$password));
+		$query = sprintf("SELECT id, login, name, email, password, folder, role_id AS role  FROM users WHERE password ='%s'",  prepareLineToQuery($this->link,$password));
 		return mysqli_fetch_assoc(mysqli_query($this->link, $query));
 	}
 

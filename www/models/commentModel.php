@@ -8,37 +8,37 @@ class CommentModel extends Model
 
 	function getAllComments($id)
 	{
-		$query = sprintf("SELECT users.name, users.id AS userId, comments.comment, comments.created, comments.id FROM comments, users  WHERE comments.user_id = users.id AND art_id=%d ORDER BY comments.id DESC",(int) $id);
+		$query = sprintf("SELECT users.name, users.id AS userId, comments.comment, comments.date, comments.id FROM comments, users  WHERE comments.user_id = users.id AND art_id=%d ORDER BY comments.id DESC",(int) $id);
 		$result = mysqli_query($this->link,$query);
-		$comments = array();
+		$comments = array(); 
 		while($row = mysqli_fetch_assoc($result))
 			$comments[] = $row;
 		return $comments;
 		
 	}
 
-	function addComment( $id, $userId, $created, $comment)
+	function addComment( $id, $userId, $date, $comment)
 	{
 		$comment = trim($comment);
-		if (($userId)&&($created)&&($comment))
+		if (($userId)&&($date)&&($comment))
 		{
-			$created = prepareLineToQuery($this->link, $created);
+			$date = prepareLineToQuery($this->link, $date);
 			$comment = prepareLineToQuery($this->link, $comment);
-			$query = sprintf("INSERT INTO comments ( created, comment, user_id, art_id) 
-				VALUES ('%s', '%s', '%d', '%d')", $created, $comment,(int) $userId, (int) $id);
+			$query = sprintf("INSERT INTO comments ( date, comment, user_id, art_id) 
+				VALUES ('%s', '%s', '%d', '%d')", $date, $comment,(int) $userId, (int) $id);
 			$result = mysqli_query($this->link,$query);
 		}	
 	}
 
-	function editComment( $id, $userId, $created, $comment)
+	function editComment( $id, $userId, $date, $comment)
 	{
 		$comment = trim($comment);
-		if (($userId)&&($created)&&($comment))
+		if (($userId)&&($date)&&($comment))
 		{
-			$created = prepareLineToQuery($this->link, $created);
+			$date = prepareLineToQuery($this->link, $date);
 			$comment = prepareLineToQuery($this->link, $comment);
-			$query = sprintf("UPDATE comments SET created='%s', comment ='%s' 
-				WHERE id='%d' AND user_id = '%d' ", $created, $comment, (int) $id, (int) $userId);
+			$query = sprintf("UPDATE comments SET date='%s', comment ='%s' 
+				WHERE id='%d' AND user_id = '%d' ", $date, $comment, (int) $id, (int) $userId);
 			$result = mysqli_query($this->link, $query);
 		}
 	}

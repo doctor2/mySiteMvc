@@ -11,7 +11,7 @@ class CommentsController extends Controller
 	function index()
 	{
 		if (!empty($_POST['save']))
-			$this->model->editComment( $_POST['commentId'], $_SESSION['USER_ID'], $_POST['created'], $_POST['comment']);
+			$this->model->editComment( $_POST['commentId'], $_SESSION['USER_ID'], $_POST['date'], $_POST['comment']);
 		unset($_SESSION['COMMENTS_EDIT']);
 		exit(header('location: '.$_SERVER['HTTP_REFERER']));
 	}

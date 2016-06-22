@@ -12,14 +12,13 @@ class AccountController extends Controller
 	{
 		if (@$_POST['enter']) 
 		{
-			$result = $this->model->getUser($_POST['login']);
+			$result = $this->model->getUserByLogin($_POST['login']);
 			if (empty($result)) 
 			{
 				$this->model->addUser($_POST['login'], $_POST['email'], $_POST['password'], $_POST['name']);
-				$result = getUser($_POST['login']);
+				$result = getUserByLogin($_POST['login']);
 				addUserToSession($result);
-				header("Location: /");
-				exit();
+				exit(header("Location: /"));
 			}
 		}
 		$this->view->generate('Регистрация', $this->path.'register.php');
@@ -28,15 +27,12 @@ class AccountController extends Controller
 	function login()
 	{
 		if (@$_POST['enter'] ) {
-			$result = $this->model->getUser($_POST['login']);
+			$result = $this->model->getUserByLogin($_POST['login']);
 			$password = generatePassword($_POST['password']);
 			if  ($password == $result['password'])
 			{
 				addUserToSession($result);
-				if ($result['login'] == 'admin') {
-					header("Location: /admin");
-					exit();
-				}
+				if ($result['login'] == 'admin')  exit(header("Location: /admin"));
 				if (@$_REQUEST['remember'] ) setcookie('user', $password, strtotime('+30 days'), '/');
 				exit(header("Location: /"));
 			}
